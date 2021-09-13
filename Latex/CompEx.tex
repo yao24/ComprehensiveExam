@@ -1,0 +1,128 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[scale = 0.8]{geometry}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{subfig}
+\title{Comprehensive Exam\\[1ex] }
+\author{Yao Gahounzo}
+\begin{document}
+	
+	\maketitle
+	
+	\section{Introduction and  Background}
+	
+	The Antartic ice shelves either melt or dissolve depending on the sea water temperature. The melting of the ice shelves occur due to turbulent transport of salt and heat to the ice face \cite{gayen2016simulation}. It also occur when the sea water is sigificantly warm. While the dissolution occur when the seawater temperature is closed to $O^{\circ} C$. Under the Antartic Oceanic condition, the sea surface temperature are almost $O^{\circ} C$ (Rignot and Jacobs 2002, Payne et al. 2004,  \cite{gayen2016simulation}). At such low temperature, the dissolution(phase change from solid to liquid) is controlled essentially by transfer of solute to ice-ocean interface. When the dissolution occurs, the interface salinity is non-zero \cite{kerr2015dissolution}. The dissolution and the melting of ice shelves take place within the boundary layer so its knowledge is imporatant in the prediction of the melting rate and the future rises of sea water.
+	
+	To understand the processes of the dissolution and the melting at the ice shelves cavities, \cite{jenkins2010observations} conducted  measurements with an autonomous underwater vehicle near the Pine Island Glacier. They provided detail and spatially complete set of observations from the water column near the ice cavity. However, these measurements are very challenging for the flow field near the ice-ocean interface, and only the observation from laboratory experiments on the melting of ice under oceanic conditions are available \cite{gayen2016simulation}.
+	
+	In the recent work done by \cite{wells2011melting}, analysed the thermal and compositional boundary layer structure during the melting and dissolution. They determined the condition for the transition between the melting and dissolving regimes. However, another study, pointed out that their analysis can not be used in the prediction of dissolution or melting of large bodies of ice especially in the polar ocean because of turbulence that occur from the conective flow after a vertical distance of 10-20 cm. \cite{gayen2016simulation} in their work 
+	 they also analysed the structure of the boundary layer and conclued that it influences the dissolution velocity. Their resluts showed that due to  a ticker thermal boundary layer in laminar regime the dissolution velocity is smaller while the dissolution velocity and temperature at the interface increase rapidly with height from the bottom of in the transition region.
+	 
+	 In what follows we reproduce the simulation done by \cite{gayen2016simulation} using DNS in three dimesions with spectral method or continuous Galerkin (CG) method in one dimension with backward differentiation formula (BDF3) method for time integration. The same ice-ocean properties and parameters have been used in our simulation to investigate the temperature and salinity profiles at the interface, also convection and dissolution rate generated when a wall of ice dissolve into seawater under Antartic ocean conditions.
+	
+	
+	\section{Governing Equations}
+	
+	Most of the 3-D ocean circulation simulation use the Navier-stokes equations under the Boussinesq approximation. These equations are written as follows
+	
+	\begin{align}
+		\nabla\cdot\mathrm{u} &= 0,\\
+		\dfrac{D\mathrm{u}}{Dt} & = -\dfrac{1}{\rho_0}\nabla p + \nu\nabla^2\mathrm{u} - \dfrac{\Delta\rho}{\rho_0}g\mathbf{k},\\
+		\dfrac{D\mathrm{T}}{Dt} & = \kappa_T\nabla^2\mathrm{T} ,\\ \label{eq:3}
+		\dfrac{D\mathrm{S}}{Dt} & = \kappa_S\nabla^2\mathrm{S} ,\\ \label{eq:4}
+		\Delta\rho &=\rho_0\left[ \beta(S-S_w) - \alpha(T-Tw)\right].
+	\end{align}
+
+	where $\mathbf{u} = (u,v,w)$ is the flow velocity, $\mathrm{p}$ pressure, $T$ is the temperature with $T_w$ the far-field temperature and $S$ is the salinity with $S_w$ the far-field salinity. The density is $\mathrm{\rho}$ with $\rho_0$ the reference density and $\Delta \rho = \rho-\rho_0$. $\nu, \kappa_T$ ans $\kappa_S$ are the kinematic velocity, thermal diffusivity and salinity diffusivity of the saline water respectively, $\alpha$  the coefficient of thermal exansion, and $\beta$ the coefficient of haline contraction.
+	
+	In this we restrained our models in to one dimension and the focus is on the temperature and salinity profile at the ice-ocean interface, so the simulation take into account only the equations $(\ref{eq:3})$ and $(\ref{eq:4})$ that described the temperature and salinity at the interface. In the simulation, a constant velocity $u$ for the flow has been used. The equations $(\ref{eq:3})$ and $(\ref{eq:4})$ in one dimesion becomes
+	
+	\begin{eqnarray}
+		\label{eq:6}
+		\dfrac{\partial\mathrm{T}}{\partial t} +u	\dfrac{\partial\mathrm{T}}{\partial x}& = \kappa_T\dfrac{\partial^2T}{\partial x^2} ,\\[0.3cm] 
+		\label{eq:7}
+		\dfrac{\partial\mathrm{S}}{\partial t} +u	\dfrac{\partial\mathrm{S}}{\partial x}& = \kappa_S\dfrac{\partial^2S}{\partial x^2} . 
+	\end{eqnarray}
+
+	To solve the above equations and determine the characteristics the salinity and temperature at the interface, three physical constraints have to be taken into consideration. The interface must be at the freezing point, heat and salt must be conserved at the interface during any phase change, these leads to the so-called the diffusive three equations formulation. For more detail we refer the reader to \cite{holland1999modeling}. The equations solved at the boundary are 
+	
+	\begin{equation}
+		\label{eq:9}
+		T_b = \lambda_1S_b + \lambda_2 + \lambda_3p_b,
+	\end{equation} 
+
+	\begin{equation}
+		\label{eq:eq10}
+		\dfrac{\partial T}{\partial x}\bigg|_b = \dfrac{\rho_iL_i}{\rho_wc_w\kappa_T}V,
+	\end{equation}
+
+	\begin{equation}
+		\label{eq:eq11}
+		\dfrac{\partial S}{\partial x}\bigg|_b = \dfrac{\rho_i}{\rho_w\kappa_S}S_bV,
+	\end{equation}
+	
+	where $V$ is the melt rate, $S_b$, $T_b$ are salinity and temperature at the ice-ocean interface respectively. $\rho_i, L_i$ are the density and latent heat of the ice, $\rho_w$ is the density of the seawater. 
+	$\rho_i, c_i, \kappa_T, \kappa_S$, $\rho_w, c_w$ are assumed to be constants and the estimation of the temperature and salinity gradients at the ice-ocean interface are needed. Assuming that the boundary layer were laminar, the temperature (or salinity) would vary linearly between the interface and the mixed temperature (or salinities) and the melt rate, salinity and temperature at the boundary are computed as follows 
+	
+		\begin{equation}
+		\label{eq:12}
+		V = \gamma_S\left(\dfrac{S_w-S_b}{S_b}\right),
+	\end{equation}
+	
+	\begin{equation}
+		\label{eq:13}
+		T_W-T_b = \dfrac{\gamma_S}{\gamma_T} \dfrac{L_i}{c_w}\left(\dfrac{S_w-S_b}{S_b}\right),
+	\end{equation}
+
+	\begin{equation}
+		\label{eq:14}
+		KS_b^2+FS_b+MS_w = 0,
+	\end{equation}
+	
+	where
+	
+	$$K = \lambda_1\left(1-\dfrac{\gamma_S}{\gamma_T}\right), \quad F = -T_w-\dfrac{\gamma_S}{c_w\gamma_T}L_i+(\lambda_2+\lambda_3p_b)\left(1-\dfrac{\gamma_S}{\gamma_T}\right)+\lambda_1\dfrac{\gamma_S}{\gamma_T}S_w,$$
+	and
+	
+	$$M = \dfrac{\gamma_S}{c_w\gamma_T}L_i+\lambda_1\dfrac{\gamma_S}{\gamma_T}(\lambda_2+\lambda_3p_b).$$
+	
+	$\gamma_T$ is the temperature exchange velocitiy and $\gamma_S$ is the salinity exchange velocity that we assumed constants.
+	
+	\section{Numerical method: Spectral method}
+	
+	Unlike DNS method used by \cite{gayen2016simulation}, we used CG method with the implicit time integration BDF3 described as follows using $(\ref{eq:6})$
+	
+	$$\dfrac{\partial\mathrm{T}}{\partial t} +u	\dfrac{\partial\mathrm{T}}{\partial x} = \kappa_T\dfrac{\partial^2T}{\partial x^2}.$$
+	
+	$$11T^{n+3} -18T^{n+2} + 9T^{n+1} -2T^{n} + 6dtu	\dfrac{\partial\mathrm{T^{n+3}}}{\partial x}  = 6\kappa_T\dfrac{\partial^2T^{n+3}}{\partial x^2}$$
+	
+	The space discretization of above equation using CG gives in matrix form 
+	
+	$$11MT^{n+3} -18MT^{n+2} + 9MT^{n+1} -2MT^{n}+6udtDT^{n+3} = 6\kappa_TdtB -6\kappa_T dtLT^{n+3}$$
+	
+	$$\left[11M+6dt(uD+\kappa_TL)\right]T^{n+1} = M\left(18T^{n+2}-9T^{n+1}+2T^{n}\right) + 6\kappa_TdtB$$
+	
+	where $M$ is the mass matrix, $D$ the differentiation matrix for the advection term, $L$ laplacian matrix for the diffusion term and $B$ the boundary vector that contains the values of the solution at the boundary.
+	
+	
+	\section{Results}
+	
+	\section{Conclusion}
+	
+	
+	
+	
+	
+	
+	\newpage
+	
+	\bibliographystyle{unsrt}
+	\bibliography{refComp}
+\end{document}
