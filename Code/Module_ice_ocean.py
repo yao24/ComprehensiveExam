@@ -1,9 +1,39 @@
+'''
+                          ----------------------------------------
+                          
+                               COMPREHENSIVE EXAM ARTIFACT
+                               
+                               
+                               Author: Yao Gahounzo
+                                       Computing PhD Student
+                                       Boise State University
+            
+                               Date: September 29, 2021
+
+                          ----------------------------------------
+
+This file contains all the subroutines of the 1D Diffusion equation.
+
+There are subroutines for different boundary conditions (Dirichlet, Neumann, and Robin).
+
+Lagrange polynomial have been used as the test function or basis function for the spacial integration.
+Legendre_Gauss_Lobatto (LGL) formulas is used to compute the integration weight.
+
+Lobatto points have been used in the grid construction.
+
+
+'''
+
+
+
 # Import some modules
 from numpy import *
 from time import perf_counter
 from scipy.sparse import csr_matrix
 import copy
 from scipy.optimize import fsolve
+from scipy import special
+
 
 
 def Legendre_deriv(Q, x):
@@ -199,7 +229,7 @@ def intma_cdg(N, Ne, method_type):
     return intma
 
 
-#funtion that compute weight values based on quadrature rule
+#funtion that compute weight values based on Legendre-Gauss-Lobatto (LGL) quadrature formulas
 def weight(Q):
     
     '''
@@ -219,11 +249,11 @@ def weight(Q):
     for i in range(Q+1):
         # call of the function "Legendre_deriv" to compute legendre polynomial and its first and second derivatives
         out1, out2, out3 = Legendre_deriv(Q, xi[i])
-        w[i] = 2/(Q*(Q+1)*(out1)**2)
+        w[i] = 2/(Q*(Q+1)*(out1)**2)        # compute the weight
         
     return w 
 
-# grid points
+# Construction grid points
 def grid_dg(N,Ne, xe, ax, bx):
     
     '''
@@ -294,40 +324,6 @@ def Element_matrix(N,Q, wght,l_basis):
 
     return Me
 
-#Differentiation element matrix
-def Element_Diff_matrix(N, Q, wght, l_basis, dl_basis):
-    
-    '''
-    This function computes the element differentiation matrix
-    
-    Inputs:
-    -------
-            Q       : Integration order(N+1: for exact, N: for inexact integration)
-            N       : Polynomial order
-            wght    : weights
-            l_basis : basis function values
-            dl_basis: derivative values of the basis function
-            
-    Output:
-    -------
-           De: Element differentiation matrix
-    '''
-    
-    # initialisation of the matrix
-    De = zeros((N+1, N+1))
-    for k in range(Q+1):                 # loop through integration points
-        wk = wght[k]                     # quadrature weight
-        
-        for i in range(N+1):             # loop through rows
-            dxik = dl_basis[i,k]         # value of the derivative of the basis function
-            
-            for j in range(N+1):         # loop through columns
-                xjk = l_basis[j,k]       # value of the basis function
-                
-                De[i,j] += wk*dxik*xjk
-
-    return De
-
 # Direct  Stiffness Summation (DSS) operator
 
 def DSS_operator(A, Ne, N, Np, intma, coord, matrix_type = None):
@@ -358,23 +354,23 @@ def DSS_operator(A, Ne, N, Np, intma, coord, matrix_type = None):
         # grid size in each element
         dx=x[-1]-x[0]
             
-        for j in range(N+1):                   # loop over the columns
+        for j in range(N+1):                          # loop over the columns
 
-            J = int(intma[j,e-1])              # position of the i-th row in the global position
+            J = int(intma[j,e-1])                     # position of the i-th row in the global position
 
-            for i in range(N+1):               # loop over the rows
+            for i in range(N+1):                      # loop over the rows
 
-                I = int(intma[i, e-1])         # position of the i-th row in the global position
+                I = int(intma[i, e-1])                # position of the i-th row in the global position
 
-                # diff = differentiation matrix
-                if (matrix_type == 'diff'):
+                
+                if (matrix_type == 'diff'):            # diff = differentiation matrix
                     M[I,J] = M[I,J] + A[i,j]
-                # Lmatrix = Laplacian matrix
-                elif(matrix_type == "Lmatrix"):
+                
+                elif(matrix_type == "Lmatrix"):        # Lmatrix = Laplacian matrix
                     M[I,J] = M[I,J] + (1/dx)*A[i,j]
 
-                else:
-                    # For mass matrix
+                else:                                  # For mass matrix
+                    
                     M[I,J] = M[I,J] + dx*A[i,j]
                     
     return M
@@ -404,15 +400,14 @@ def LmatrixE(Ne,N,Q,wq,dl_basis):
         wk = wq[k]                        # quadrature weight
         
         for j in range(N+1):              # loop through columns
-            xi = dl_basis[j,k]            # value of the derivative of the basis function
+            xj = dl_basis[j,k]            # value of the derivative of the basis function
             
             for i in range(N+1):          # loop through rows
-                xj = dl_basis[i,k]        # value of the derivative of the basis function
+                xi = dl_basis[i,k]        # value of the derivative of the basis function
                 
                 Le[i,j] = Le[i,j] - 2*wk*xi*xj
 
     return Le
-
 
 # Exact solution
 def exact_solution(coord,Ne,N,intma, Np, time, ax, bx, icase, exactSol, g):
@@ -495,65 +490,15 @@ def exact_solution1(coord,Ne,N,intma, Np, time, ax, bx, c, initial_condition):
                 
     return qe
 
-## Flux matrix
-def flux_matrix(Ne, intma, N, Np, diss,u):
-    
-    '''
-    This function compute the flux matrix for the DG method
-    
-    Inputs:
-    -------
-            N       : Polynomial order
-            Ne      : Number of elements
-            Np      : Number of global grid points
-            intma   : intma array
-            u       : velocity
-            diss    : 0(centered flux), 1(Rusanov flux)
-            
-    Output:
-    -------
-           FM: Flux matrix
-    '''
-    
-    FM = zeros((Np,Np))
-    n_left = -1 
-    n_right = 1
-    for e in range(1, Ne + 1):
-        
-        # left side of the element
-        L = e - 1
-        if e == 1:
-            L = Ne
-        
-        I = int(intma[0,e-1])
-        J = int(intma[N,L-1])
-
-        FM[I,I] = (u/2)*n_left*(1 + n_left*diss)
-        FM[I,J] = (u/2)*n_left*(1 - n_left*diss)
-    
-        # right side the element
-        R = e+1
-
-        if e == Ne:
-            R = 1
-
-        I = int(intma[N,e-1])
-        J = int(intma[0,R-1])
-
-        FM[I,I] = (u/2)*n_right*(1 + n_right*diss)
-        FM[I,J] = (u/2)*n_right*(1 - n_right*diss)
-    
-    return FM
-
-def bc_Neumann(Mmatrix_inv, Np, c, c1,ax, bx, time, icase, g,exactSol):
+def bc_Neumann(Mmatrix_inv, Np, c, ax, bx, time, icase, g,exactSol):
     
     '''
     This  function apply Neumann boundary condition at the boundaries.
     '''
     
     B = zeros(Np)
-    B[0] =  -c*g(ax, time, icase) + c1*exactSol(ax, time, icase)
-    B[-1] =  c*g(bx, time, icase) - c1*exactSol(bx, time, icase)
+    B[0] =  -c*g(ax, time, icase)
+    B[-1] =  c*g(bx, time, icase)
     
     RHS = Mmatrix_inv@B
     
@@ -570,7 +515,7 @@ def bc_Dirichlet(exactSol, Np, RHS, ax, bx, time, icase):
     
     return RHS
 
-def bc_robin(M, Np,RHS, c, c1,ax, bx, time, icase, exactSol,g,dt):
+def bc_robin(M, Np,RHS, c, ax, bx, time, icase, exactSol,g,dt):
     
     '''
     This function apply the Robin boundary condition at the boundaries
@@ -579,7 +524,7 @@ def bc_robin(M, Np,RHS, c, c1,ax, bx, time, icase, exactSol,g,dt):
     g: is the boundary function or the somehow the function that represent the derivative of the solution at the boundary.
     '''
     
-    b = c*g(bx, time, icase) - c1*exactSol(bx, time, icase)
+    b = c*g(bx, time, icase)
     B1 = c*b*M[:,-1]
     RHS = RHS + dt*B1
     RHS[0] =  exactSol(ax, time, icase)
@@ -589,21 +534,22 @@ def bc_robin(M, Np,RHS, c, c1,ax, bx, time, icase, exactSol,g,dt):
 # Salinity boundary conditions
 def bc_salt(M,hB, c2, Np, RHS,SB, V, bcst2,dt):
     
-    b = hB(bcst2,SB, V)
-    
-    B1 = - c2*b*M[:,0]
+    b = -c2*hB(bcst2,SB, V)
+
+    B1 = b*M[:,0]
     
     RHS[-1] = RHS[-2]
     RHS = RHS + dt*B1
     
     return RHS
 
+
 # Temperature boundary conditions
 def bc_temp(M,hT, c1, Np, RHS, V, bcst1,dt):
     
-    a = hT(bcst1, V)
+    a = -c1*hT(bcst1, V)
     
-    B1 = - c1*a*M[:,0]
+    B1 = a*M[:,0]
    
     RHS[-1] = RHS[-2]
     RHS = RHS + dt*B1
@@ -614,8 +560,8 @@ def bc_temp(M,hT, c1, Np, RHS, V, bcst1,dt):
 def IRK_coefficients(ti_method):
     
     '''
-    This function compute the coefficients of the different implicit Runge Kutta methods
-    ti_method denotes the order of the methods
+    This function compute the coefficients of the different implicit Runge Kutta methods,
+    ti_method denotes the order of the methods.
     '''
   
     if(ti_method == 1):
@@ -733,8 +679,8 @@ def IRK_coefficients(ti_method):
     return alpha, beta, stages
 
                 
-def cg_dgSolver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol, c1,c, u, CFL, Tfinal, kstages,\
-                method_type, diss, icase, alpha1, beta1, ti_method, time_method):
+def diff_Solver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol,c, u, CFL, Tfinal,\
+                method_type, icase, alpha1, beta1, ti_method, time_method):
 
     '''
     This function is CG/DG solver for 1D advection-diffusion equation
@@ -750,11 +696,9 @@ def cg_dgSolver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol, c1,c, u, CFL
             intergatio_type: Exact or Inexact integration
             method_type    : CG or DG
             icase          : For the initial condition type(icase = 1, for gaussian or 2, for sine)
-            diss           : 0(centered flux), 1(Rusanov flux)
             u              : velocity
             Courant_max    : CFL
             Tfinal         : Ending time for the computation
-            kstages        : Type for the time integration(2 = RK2, 3 = RK3, 4 = RK4)
             time_step      : function that compute the time step and number of time( double time per element)
     Outputs:
     --------
@@ -768,14 +712,14 @@ def cg_dgSolver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol, c1,c, u, CFL
     
     # Compute Interpolation and Integration Points
     
-    t0 = perf_counter()
-    xgl = Lobatto_p(N)
-    wgl = weight(N)
+    t_start = perf_counter()  # start timing
     
-    xnq = Lobatto_p(Q)
-    wnq = weight(Q)
+    xgl = Lobatto_p(N)   # Compute Lobatto points
     
-    # preparation time 
+    xnq = Lobatto_p(Q)   # Compute Lobatto points
+    
+    wnq = weight(Q)      # Compute the weight values
+    
     
     # Create intma
     intma = intma_cdg(N, nel, method_type)
@@ -784,13 +728,13 @@ def cg_dgSolver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol, c1,c, u, CFL
     
     coord = grid_dg(N, nel,xgl, ax, bx)
     
-    dx = coord[1,0] - coord[0,0]
+    #dx = coord[1,0] - coord[0,0]
     
-    
-    # time stuff
-    dx = (bx-ax)/nel                  
+    # time stuff  
+    dx = (bx-ax)/Np
     dt_est = CFL*dx**2/u
-    ntime = int(floor(Tfinal/dt_est))
+    ntime = int(floor(Tfinal/dt_est)+1)
+
     dt = Tfinal/ntime
     
     print("N = {:d}, nel = {:d}, Np = {}".format(N,nel,Np))
@@ -799,15 +743,12 @@ def cg_dgSolver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol, c1,c, u, CFL
     
     # Lagrange basis and its derivatives
     l_basis, dl_basis = LagrangeBasis_deriv(N,Q,xgl, xnq)
-    
-    # Form Element Mass and Differentiation Matrices
+
+    # Form Element Mass Matrix
     Me = Element_matrix(N,Q,wnq,l_basis)
-    
-    De = Element_Diff_matrix(N, Q, wnq, l_basis, dl_basis)
     
     # Form Global Mass and Differentiation Matrices
     GMmatrix = DSS_operator(Me, nel, N, Np, intma, coord, None)
-    GDmatrix = DSS_operator(De, nel, N, Np, intma, coord, 'diff')
 
     # Form element and global Laplacian matrix
     Le = LmatrixE(nel,N, Q,wnq,dl_basis)
@@ -827,7 +768,7 @@ def cg_dgSolver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol, c1,c, u, CFL
         
         GMmatrix[0,0] = 1
         GMmatrix[-1,-1] = 1
-        Dhmatrix = c1*GDmatrix + c*Lmatrix
+        Dhmatrix = c*Lmatrix
 
     elif(alpha1 == 1 and beta1 != 0):   # Robin
         
@@ -838,21 +779,16 @@ def cg_dgSolver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol, c1,c, u, CFL
         
         GMmatrix[0,0] = 1
 
-        Dhmatrix = c1*GDmatrix + c*Lmatrix
+        Dhmatrix = c*Lmatrix
         Dhmatrix[-1,-1] = Dhmatrix[-1,-1] - c*beta1
         
     elif(alpha1 == 1 and beta1 == 0):  # Neumann
         
         bcType = "Neumann"
-        Dhmatrix = c1*GDmatrix + c*Lmatrix
+        Dhmatrix = c*Lmatrix
     
     # Inverse of global mass matrix
     GMmatrix_inv = linalg.inv(GMmatrix)
-
-    t1 = perf_counter()
-    
-    
-    time_f = t1-t0
     
     # Compute Initial Solutions
     t_time = 0
@@ -861,17 +797,19 @@ def cg_dgSolver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol, c1,c, u, CFL
     # Integretation method coefficients
     alpha,beta, stages = IRK_coefficients(ti_method)
     
-    
+    # Implicit Range Kutta method stuff
     Amatrix = GMmatrix - dt*alpha[stages-1,stages-1]*Dhmatrix
     Amatrix_inv = linalg.inv(Amatrix)
+    
+    # Time integration
     
     if(time_method == "IRK"):
 
         # Implicit time Integration
         q = qe
 
-        Q = zeros((Np,stages))
-        QQ = zeros((Np,stages))
+        Qt = zeros((Np,stages))
+        QQt = zeros((Np,stages))
         R = zeros((Np,stages))
 
         #ntime = 1
@@ -880,9 +818,9 @@ def cg_dgSolver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol, c1,c, u, CFL
 
             t_time = t_time + dt
 
-            Q[:,0] = q[:]
-            R[:,0] = Dhmatrix@Q[:,0]
-            for i in range(1,stages):
+            Qt[:,0] = q[:]
+            R[:,0] = Dhmatrix@Qt[:,0]
+            for i in range(1,stages):         # get stage solution 
                 aa = 0
                 R_sum = zeros(Np)
 
@@ -892,25 +830,25 @@ def cg_dgSolver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol, c1,c, u, CFL
 
                 RR = GMmatrix@Q[:,0] + dt*R_sum
 
-                Q[:,i] = Amatrix_inv@RR
+                Qt[:,i] = Amatrix_inv@RR
                 
                 # Apply boundary conditions at the intermediate time step
                 if(bcType == "Dirichlet"):
-                    Q[:,i] = bc_Dirichlet(exactSol, Np, Q[:,i], ax, bx, tn + aa*dt, icase)
+                    Qt[:,i] = bc_Dirichlet(exactSol, Np, Qt[:,i], ax, bx, tn + aa*dt, icase)
                 elif(bcType == 'robin'):
-                    Q[:,i] = bc_robin(GMmatrix_inv, Np,Q[:,i], c, c1,ax, bx, tn + aa*dt, icase, exactSol,g,dt) 
+                    Qt[:,i] = bc_robin(GMmatrix_inv, Np,Qt[:,i], c,ax, bx, tn + aa*dt, icase, exactSol,g,dt) 
 
                 elif(bcType == "Neumann"):
 
-                    qbc = bc_Neumann(GMmatrix_inv, Np,c, c1,ax, bx, tn + aa*dt, icase, g,exactSol)
+                    qbc = bc_Neumann(GMmatrix_inv, Np,c,ax, bx, tn + aa*dt, icase, g,exactSol)
 
-                    Q[:,i] = Q[:,i] + dt*qbc
+                    Qt[:,i] = Qt[:,i] + dt*qbc
 
-                R[:,i] = Dhmatrix@Q[:,i]
+                R[:,i] = Dhmatrix@Qt[:,i]
 
             R_sum = zeros(Np)
             
-            for i in range(stages):
+            for i in range(stages):            # solution update
                 R_sum = R_sum + beta[i]*R[:,i]
 
             qp = q + dt*GMmatrix_inv@R_sum
@@ -923,10 +861,10 @@ def cg_dgSolver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol, c1,c, u, CFL
 
             elif(bcType == 'robin'):
 
-                qp = bc_robin(GMmatrix_inv, Np,qp, c,c1, ax, bx, t_time, icase, exactSol,g,dt)
+                qp = bc_robin(GMmatrix_inv, Np,qp, c, ax, bx, t_time, icase, exactSol,g,dt)
 
             elif(bcType == "Neumann"):
-                qbc = bc_Neumann(GMmatrix_inv, Np,c, c1,ax, bx, t_time, icase, g,exactSol)
+                qbc = bc_Neumann(GMmatrix_inv, Np,c,ax, bx, t_time, icase, g,exactSol)
 
                 qp = qp + dt*qbc
 
@@ -938,16 +876,16 @@ def cg_dgSolver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol, c1,c, u, CFL
         # Initialize for temperature
         q0 = qe
         q = qe
-        Q = zeros((Np,stages))
-        QQ = zeros((Np,stages))
+        Qt = zeros((Np,stages))
+        QQt = zeros((Np,stages))
         R = zeros((Np,stages))
         
-        # Computation of the second initial value using IRK method
+        # Computation of the second step solution using IRK method
         # Begining of IRK time integration
         t_time = t_time + dt
         tn = 0
-        Q[:,0] = q[:]
-        R[:,0] = Dhmatrix@Q[:,0]
+        Qt[:,0] = q[:]
+        R[:,0] = Dhmatrix@Qt[:,0]
 
         for i in range(1,stages):
             aa = 0
@@ -959,20 +897,20 @@ def cg_dgSolver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol, c1,c, u, CFL
 
             RR = GMmatrix@Q[:,0] + dt*R_sum
 
-            Q[:,i] = Amatrix_inv@RR
+            Qt[:,i] = Amatrix_inv@RR
             
             # Apply boundary conditions at the intermediate time step
             if(bcType == "Dirichlet"):
-                Q[:,i] = bc_Dirichlet(exactSol, Np, Q[:,i], ax, bx, tn + aa*dt, icase)
+                Qt[:,i] = bc_Dirichlet(exactSol, Np, Qt[:,i], ax, bx, tn + aa*dt, icase)
             elif(bcType == 'robin'):
-                Q[:,i] = bc_robin(GMmatrix_inv, Np,Q[:,i], c, c1,ax, bx, tn + aa*dt, icase, exactSol,g,dt) 
+                Qt[:,i] = bc_robin(GMmatrix_inv, Np,Qt[:,i], c,ax, bx, tn + aa*dt, icase, exactSol,g,dt) 
 
             elif(bcType == "Neumann"):
 
-                qbc = bc_Neumann(GMmatrix_inv, Np,c, ax,c1, bx, tn + aa*dt, icase, g,exactSol)
-                Q[:,i] = Q[:,i] + dt*qbc
+                qbc = bc_Neumann(GMmatrix_inv, Np,c, ax, bx, tn + aa*dt, icase, g,exactSol)
+                Qt[:,i] = Qt[:,i] + dt*qbc
 
-            R[:,i] = Dhmatrix@Q[:,i]
+            R[:,i] = Dhmatrix@Qt[:,i]
 
         R_sum = zeros(Np)
         
@@ -988,16 +926,16 @@ def cg_dgSolver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol, c1,c, u, CFL
 
         elif(bcType == 'robin'):
 
-            q = bc_robin(GMmatrix_inv, Np,q, c, c1,ax, bx, t_time, icase, exactSol,g,dt)
+            q = bc_robin(GMmatrix_inv, Np,q, c,ax, bx, t_time, icase, exactSol,g,dt)
 
         elif(bcType == "Neumann"):
-            qbc = bc_Neumann(GMmatrix_inv, Np,c, c1,ax, bx, t_time, icase, g,exactSol)
+            qbc = bc_Neumann(GMmatrix_inv, Np,c,ax, bx, t_time, icase, g,exactSol)
 
             q = q + dt*qbc
            
         # End of IRK time integration
         
-        A = 3*GMmatrix - 2*dt*(c1*GDmatrix+c*Lmatrix)
+        A = 3*GMmatrix - 2*dt*c*Lmatrix
         
         if(alpha1 == 1 and beta1 != 0):
             
@@ -1021,11 +959,11 @@ def cg_dgSolver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol, c1,c, u, CFL
 
             elif(bcType == 'robin'):
                 
-                qp = bc_robin(A_inv, Np,qp, c, c1,ax, bx, t_time, icase, exactSol,g,2*dt)
+                qp = bc_robin(A_inv, Np,qp, c,ax, bx, t_time, icase, exactSol,g,2*dt)
 
             elif(bcType == "Neumann"):
                 
-                qbc = bc_Neumann(A_inv, Np,c, c1,ax, bx, t_time, icase, g,exactSol)
+                qbc = bc_Neumann(A_inv, Np,c,ax, bx, t_time, icase, g,exactSol)
 
                 qp = qp + 2*dt*qbc
                 
@@ -1038,20 +976,22 @@ def cg_dgSolver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol, c1,c, u, CFL
         q0 = qe
         q = qe
 
-        Q = zeros((Np,stages))
-        QQ = zeros((Np,stages))
+        Qt = zeros((Np,stages))
+        QQt = zeros((Np,stages))
         R = zeros((Np,stages))
+        
+        # Computation of the second and third step solutions of BDF3 using IRK method
+        # Begining of IRK time integration
         q21 = zeros((Np,2))
-        #ntime = 1
         tn = 0
         for itime in range(1,3):
 
             t_time = t_time + dt
 
-            Q[:,0] = q[:]
-            R[:,0] = Dhmatrix@Q[:,0]
+            Qt[:,0] = q[:]
+            R[:,0] = Dhmatrix@Qt[:,0]
 
-            for i in range(1,stages):
+            for i in range(1,stages):          # get stage solution 
                 aa = 0
                 R_sum = zeros(Np)
 
@@ -1059,26 +999,26 @@ def cg_dgSolver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol, c1,c, u, CFL
                     R_sum = R_sum + alpha[i,j]*R[:,j]
                     aa += alpha[i,j]
 
-                RR = GMmatrix@Q[:,0] + dt*R_sum
+                RR = GMmatrix@Qt[:,0] + dt*R_sum
 
-                Q[:,i] = Amatrix_inv@RR
+                Qt[:,i] = Amatrix_inv@RR
                 
                 # Apply boundary conditions at the intermediate time step
                 if(bcType == "Dirichlet"):
-                    Q[:,i] = bc_Dirichlet(exactSol, Np, Q[:,i], ax, bx, tn + aa*dt, icase)
+                    Qt[:,i] = bc_Dirichlet(exactSol, Np, Qt[:,i], ax, bx, tn + aa*dt, icase)
                 elif(bcType == 'robin'):
-                    Q[:,i] = bc_robin(GMmatrix_inv, Np,Q[:,i], c, c1,ax, bx, tn + aa*dt, icase, exactSol,g,dt)
+                    Qt[:,i] = bc_robin(GMmatrix_inv, Np,Qt[:,i], c,ax, bx, tn + aa*dt, icase, exactSol,g,dt)
 
                 elif(bcType == "Neumann"):
 
-                    qbc = bc_Neumann(GMmatrix_inv, Np,c, c1,ax, bx, tn + aa*dt, icase, g,exactSol)
-                    Q[:,i] = Q[:,i] + beta[i]*dt*qbc
+                    qbc = bc_Neumann(GMmatrix_inv, Np,c,ax, bx, tn + aa*dt, icase, g,exactSol)
+                    Qt[:,i] = Qt[:,i] + beta[i]*dt*qbc
 
-                R[:,i] = Dhmatrix@Q[:,i]
+                R[:,i] = Dhmatrix@Qt[:,i]
 
             R_sum = zeros(Np)
             
-            for i in range(stages):
+            for i in range(stages):           # solution update
                 R_sum = R_sum + beta[i]*R[:,i]
 
             qp = q + dt*GMmatrix_inv@R_sum
@@ -1092,20 +1032,21 @@ def cg_dgSolver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol, c1,c, u, CFL
 
             elif(bcType == 'robin'):
 
-                qp = bc_robin(GMmatrix_inv, Np,qp, c, c1,ax, bx, t_time, icase, exactSol,g,dt)
+                qp = bc_robin(GMmatrix_inv, Np,qp, c,ax, bx, t_time, icase, exactSol,g,dt)
 
             elif(bcType == "Neumann"):
-                qbc = bc_Neumann(GMmatrix_inv, Np,c, c1,ax, bx, t_time, icase, g,exactSol)
+                qbc = bc_Neumann(GMmatrix_inv, Np,c, ax, bx, t_time, icase, g,exactSol)
 
                 qp = qp + dt*qbc
 
             # update the solution q
             q = qp 
+
             q21[:,itime-1] = qp
             
         # End of IRK time integration
         
-        A = 11*GMmatrix - 6*dt*(c1*GDmatrix+c*Lmatrix)
+        A = 11*GMmatrix - 6*dt*c*Lmatrix
        
         if(alpha1 == 1 and beta1 != 0):
             
@@ -1115,11 +1056,11 @@ def cg_dgSolver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol, c1,c, u, CFL
         
         Rmatrix = A_inv@GMmatrix
         
-        #ntime = 0
-        q1 = q21[:,0]
-        q = q21[:,1]
+        q1 = q21[:,0]    # second step solution
+        q = q21[:,1]     # third step solution
         
-        for itime in range(3,ntime+1):
+        # Compute the rest of time integration
+        for itime in range(3,ntime+1):       
             
             t_time = t_time + dt
             
@@ -1132,13 +1073,14 @@ def cg_dgSolver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol, c1,c, u, CFL
 
             elif(bcType == 'robin'):
                 
-                qp = bc_robin(A_inv, Np,qp, c, c1,ax, bx, t_time, icase, exactSol,g,6*dt)
+                qp = bc_robin(A_inv, Np,qp, c, ax, bx, t_time, icase, exactSol,g,6*dt)
 
             elif(bcType == "Neumann"):
                 
-                qbc = bc_Neumann(A_inv, Np,c, c1,ax, bx, t_time, icase, g,exactSol)
+                qbc = bc_Neumann(A_inv, Np,c, ax, bx, t_time, icase, g,exactSol)
 
                 qp = qp + 6*dt*qbc
+            
             # Updates 
             q0 = q1
             q1 = q
@@ -1146,7 +1088,7 @@ def cg_dgSolver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol, c1,c, u, CFL
             
     # End of time integration   
                              
-    t3 = perf_counter()
+    time_f = perf_counter() - t_start
     
     #t_time = Tfinal
     qexact, qx = exact_solution(coord,nel,N,intma, Np, t_time, ax, bx, icase, exactSol, g)
@@ -1161,8 +1103,8 @@ def cg_dgSolver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol, c1,c, u, CFL
 
 def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
                         initial_Temp, initial_Salt, cst1, c1, bcst1,cst2, c2,bcst2, 
-                        Tw, gammaS,gammaT, cw, Lf, cI, TS, b, c, pb, a, Sw, K, M, CFL, Tfinal,\
-                        u, u1,coefF, Meltrate, SaltB, kstages,method_type,ti_method, time_method):
+                        Tw, gammaS,gammaT, cw, Li, ci, Ti, b, c, pb, a, Sw, K, M, CFL, Tfinal,\
+                        u,coefF, Meltrate, SaltB,method_type,ti_method, time_method):
     '''
     This function is CG/DG solver for 1D advection-diffusion equation
     
@@ -1177,11 +1119,9 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
             intergatio_type: Exact or Inexact integration
             method_type    : CG or DG
             icase          : For the initial condition type(icase = 1, for gaussian or 2, for sine)
-            diss           : 0(centered flux), 1(Rusanov flux)
             u              : velocity
             Courant_max    : CFL
             Tfinal         : Ending time for the computation
-            kstages        : Type for the time integration(2 = RK2, 3 = RK3, 4 = RK4)
             time_step      : function that compute the time step and number of time( double time per element)
     Outputs:
     --------
@@ -1195,14 +1135,12 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
     
     # Compute Interpolation and Integration Points
     
-    t0 = perf_counter()
-    xgl = Lobatto_p(N)
-    wgl = weight(N)
+    t_start = perf_counter()  # start timing
     
-    xnq = Lobatto_p(Q)
-    wnq = weight(Q)
+    xgl = Lobatto_p(N)   # Compute Lobatto points
     
-    # preparation time 
+    xnq = Lobatto_p(Q)   # Compute Lobatto points
+    wnq = weight(Q)      # Compute the weight values
     
     # Create intma
     intma = intma_cdg(N, nel, method_type)
@@ -1214,8 +1152,7 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
     dx = coord[1,0] - coord[0,0]
     
     
-    # time stuff
-    dx = (bx-ax)/nel                  
+    # time stuff                 
     dt_est = CFL*dx**2/u
     dt_est = 1e-2
     ntime = int(floor(Tfinal/dt_est))
@@ -1228,34 +1165,20 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
     # Lagrange basis and its derivatives
     l_basis, dl_basis = LagrangeBasis_deriv(N,Q,xgl, xnq)
     
-    # Form Element Mass and Differentiation Matrices
+    # Form Element Mass matrix
     Me = Element_matrix(N,Q,wnq,l_basis)
     
-    De = Element_Diff_matrix(N, Q, wnq, l_basis, dl_basis)
-    
-    # Form Global Mass and Differentiation Matrices
+    # Form Global Mass matrix
     GMmatrix = DSS_operator(Me, nel, N, Np, intma, coord, None)
-    GDmatrix = DSS_operator(De, nel, N, Np, intma, coord, 'diff')
 
     # Form element and global Laplacian matrix
     Le = LmatrixE(nel,N, Q,wnq,dl_basis)
 
     Lmatrix = DSS_operator(Le, nel, N, Np, intma, coord,"Lmatrix") 
-
-    # Solve system at the interior points
-
-    DhmatrixT = u1*GDmatrix + c1*Lmatrix
-    DhmatrixS = u1*GDmatrix + c2*Lmatrix
     
     # Inverse of global mass matrix
     GMmatrix_inv = linalg.inv(GMmatrix)
-
-    t1 = perf_counter()
     
-    
-    time_f = t1-t0
-    
-    # Compute Initial Solutions
     # Compute Initial Solutions
     t_time = 0
     Te = exact_solution1(coord,nel,N,intma, Np, t_time, ax, bx, cst1, initial_Temp)
@@ -1264,12 +1187,19 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
     # Integretation method coefficients
     alpha,beta, stages = IRK_coefficients(ti_method)
     
+    # Preparation for the time integration
+    
+    # Implicit Range Kutta method stuff
+    DhmatrixT = c1*Lmatrix
+    DhmatrixS = c2*Lmatrix
     
     AmatrixT = GMmatrix - dt*alpha[stages-1,stages-1]*DhmatrixT
     AmatrixT_inv = linalg.inv(AmatrixT)
     
     AmatrixS = GMmatrix - dt*alpha[stages-1,stages-1]*DhmatrixS
     AmatrixS_inv = linalg.inv(AmatrixS)
+    
+    # Time integration
     
     if(time_method == "IRK"):
 
@@ -1301,7 +1231,7 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
             Tw = T[int(Np/2)]
             Sw = S[int(Np/2)]
 
-            L = coefF(Tw, gammaS,gammaT, cw, Lf, cI, TS, b, c, pb, a, Sw)
+            L = coefF(Tw, gammaS,gammaT, cw, Li, ci, Ti, b, c, pb, a, Sw)
          
             # compute salinity at the boundary
             SB1, SB2 = SaltB(K,L,M,Sw)
@@ -1314,7 +1244,7 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
             QS[:,0] = S
             RS[:,0] = DhmatrixS@QS[:,0]
             
-            for i in range(1,stages):
+            for i in range(1,stages):          # get stage solutions
                 aa = 0
                 RT_sum = zeros(Np)
                 RS_sum = zeros(Np)
@@ -1334,14 +1264,14 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
                 
                 QT[:,i] = bc_temp(GMmatrix_inv,hT, c1, Np, QT[:,i], V, bcst1,dt)
                 QS[:,i] = bc_salt(GMmatrix_inv,hB, c2, Np, QS[:,i],SB2, V, bcst2,dt)
-
+            
                 RT[:,i] = DhmatrixT@QT[:,i]
                 RS[:,i] = DhmatrixS@QS[:,i]
 
             RT_sum = zeros(Np)
             RS_sum = zeros(Np)
             
-            for i in range(stages):
+            for i in range(stages):         # solution update
                 RT_sum += beta[i]*RT[:,i]
                 RS_sum += beta[i]*RS[:,i]
 
@@ -1380,19 +1310,23 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
         S21 = zeros((Np,2))
         #ntime = 1
         tn = 0
+        
+        VT = zeros(ntime+1)
+        SBB = zeros(ntime+1)
+        
         for itime in range(1,3):
 
             t_time = t_time + dt
             
             # Temperature and salinity of the far filed
-            Tw = T[int(Np/2)]
-            Sw = S[int(Np/2)]
+            Tw = T[5]
+            Sw = S[5]
 
-            L = coefF(Tw, gammaS,gammaT, cw, Lf, cI, TS, b, c, pb, a, Sw)
+            L = coefF(Tw, gammaS,gammaT, cw, Li, ci, Ti, b, c, pb, a, Sw)
 
             # compute salinity at the boundary
             SB1, SB2 = SaltB(K,L,M,Sw)
-
+            
             # Compute melt rate
             V = Meltrate(Sw, SB2, gammaS)
 
@@ -1402,14 +1336,14 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
             RS[:,0] = DhmatrixS@QS[:,0]
             
             for i in range(1,stages):
-                aa = 0
+
                 RT_sum = zeros(Np)
                 RS_sum = zeros(Np)
 
                 for j in range(i):
                     RT_sum += alpha[i,j]*RT[:,j]
                     RS_sum += alpha[i,j]*RS[:,j]
-                    aa += alpha[i,j]
+                    
 
                 RRT = GMmatrix@QT[:,0] + dt*RT_sum
                 RRS = GMmatrix@QS[:,0] + dt*RS_sum
@@ -1435,11 +1369,11 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
             Tp = T + dt*GMmatrix_inv@RT_sum
             Sp = S + dt*GMmatrix_inv@RS_sum
 
-            tn = tn + dt
             # Apply boundary conditions
             
             Tp = bc_temp(GMmatrix_inv,hT, c1, Np, Tp, V, bcst1,dt)
             Sp = bc_salt(GMmatrix_inv,hB, c2, Np, Sp,SB2, V, bcst2,dt)
+            
             # update the solution q
             T = Tp 
             S = Sp 
@@ -1449,8 +1383,8 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
             
         # End of IRK time integration
         
-        AT = 11*GMmatrix - 6*dt*(u1*GDmatrix+c1*Lmatrix)
-        AS = 11*GMmatrix - 6*dt*(u1*GDmatrix+c2*Lmatrix)
+        AT = 11*GMmatrix - 6*dt*c1*Lmatrix
+        AS = 11*GMmatrix - 6*dt*c2*Lmatrix
         
         AT_inv = linalg.inv(AT)
         AS_inv = linalg.inv(AS)
@@ -1470,10 +1404,10 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
             t_time = t_time + dt
             
             # Temperature and salinity of the far filed
-            Tw = T[int(Np/2)]
-            Sw = S[int(Np/2)]
+            Tw = T[5]
+            Sw = S[5]
 
-            L = coefF(Tw, gammaS,gammaT, cw, Lf, cI, TS, b, c, pb, a, Sw)
+            L = coefF(Tw, gammaS,gammaT, cw, Li, ci, Ti, b, c, pb, a, Sw)
 
             # compute salinity at the boundary
             SB1, SB2 = SaltB(K,L,M,Sw)
@@ -1500,6 +1434,6 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
             
     # End of time integration   
                              
-    t3 = perf_counter()
+    time_f = perf_counter() - t_start        # End of the timing
         
     return S, T, coord, intma, time_f
