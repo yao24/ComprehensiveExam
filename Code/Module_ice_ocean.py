@@ -1,25 +1,25 @@
 '''
-                          ----------------------------------------
-                          
-                               COMPREHENSIVE EXAM ARTIFACT
-                               
-                               
-                               Author: Yao Gahounzo
-                                       Computing PhD Student
-                                       Boise State University
-            
-                               Date: September 29, 2021
+                                          ----------------------------------------
 
-                          ----------------------------------------
+                                               COMPREHENSIVE EXAM ARTIFACT
 
-This file contains all the subroutines of the 1D Diffusion equation.
 
-There are subroutines for different boundary conditions (Dirichlet, Neumann, and Robin).
+                                               Author: Yao Gahounzo
+                                                       Computing PhD Student
+                                                       Boise State University
 
-Lagrange polynomial have been used as the test function or basis function for the spacial integration.
-Legendre_Gauss_Lobatto (LGL) formulas is used to compute the integration weight.
+                                               Date: September 29, 2021
 
-Lobatto points have been used in the grid construction.
+                                          ----------------------------------------
+
+    This file contains all the subroutines of the 1D Diffusion equation.
+
+    There are subroutines for different boundary conditions (Dirichlet, Neumann, and Robin).
+
+    Lagrange polynomial have been used as the test function or basis function for the spacial integration.
+    Legendre_Gauss_Lobatto (LGL) formulas is used to compute the integration weight.
+
+    Lobatto points have been used in the grid construction.
 
 
 '''
