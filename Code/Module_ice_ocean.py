@@ -12,11 +12,11 @@
 
                                           ----------------------------------------
 
-    This file contains all the subroutines of the 1D Diffusion equation.
+    This file contains all the subroutines of solving the 1D Diffusion equation based on continuous galerkin (CG) method.
 
     There are subroutines for different boundary conditions (Dirichlet, Neumann, and Robin).
 
-    Lagrange polynomial have been used as the test function or basis function for the spacial integration.
+    Lagrange polynomial have been used as the basis function for the spatial integration.
     Legendre_Gauss_Lobatto (LGL) formulas is used to compute the integration weight.
 
     Lobatto points have been used in the grid construction.
@@ -809,7 +809,6 @@ def diff_Solver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol,c, u, CFL, Tf
         q = qe
 
         Qt = zeros((Np,stages))
-        QQt = zeros((Np,stages))
         R = zeros((Np,stages))
 
         #ntime = 1
@@ -876,8 +875,8 @@ def diff_Solver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol,c, u, CFL, Tf
         # Initialize for temperature
         q0 = qe
         q = qe
+        
         Qt = zeros((Np,stages))
-        QQt = zeros((Np,stages))
         R = zeros((Np,stages))
         
         # Computation of the second step solution using IRK method
@@ -977,7 +976,6 @@ def diff_Solver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol,c, u, CFL, Tf
         q = qe
 
         Qt = zeros((Np,stages))
-        QQt = zeros((Np,stages))
         R = zeros((Np,stages))
         
         # Computation of the second and third step solutions of BDF3 using IRK method
@@ -1214,11 +1212,9 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
         Sp = Se
 
         QT = zeros((Np,stages))
-        QQT = zeros((Np,stages))
         RT = zeros((Np,stages))
         
         QS = zeros((Np,stages))
-        QQS = zeros((Np,stages))
         RS = zeros((Np,stages))
 
         #ntime = 1
@@ -1299,11 +1295,9 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
         S = Se
 
         QT = zeros((Np,stages))
-        QQT = zeros((Np,stages))
         RT = zeros((Np,stages))
         
         QS = zeros((Np,stages))
-        QQS = zeros((Np,stages))
         RS = zeros((Np,stages))
         
         T21 = zeros((Np,2))
