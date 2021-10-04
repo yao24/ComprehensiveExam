@@ -75,7 +75,7 @@
 	
 	\vfill\vfill\vfill % Position the date 3/4 down the remaining page
 	
-	{\large October 3, 2021} % Date, change the \today to a set date if you want to be precise
+	{\large\today} % Date, change the \today to a set date if you want to be precise
 	
 	%------------------------------------------------
 	%	Logo
@@ -94,21 +94,23 @@
 	
 	%The heat and freshwater exchange at the ice-ocean interface is the primary driver of creating new water masses. The Antarctic ice shelves either melt or dissolve depending on the seawater temperature.
 	
-	Ocean circulation leads to ice ablation in different geophysical conditions: ice shelves, glaciers and ocean ice. The ablation is referred as the thermodynamics ice loss controlled by phase change into ocean depends on the ocean and ice temperatures and composition \citep{malyarenko2020synthesis}. Depending on the ocean temperature and ice freezing temperature, the ablation can be categorized into two thermal regimes: melting or dissolution. The melting of the ice occurs due to the turbulent transport of salt and heat to the ice face \citep{gayen2016simulation}. It also occurs when the seawater is significantly warm. In contrast, the dissolution (phase change from solid to liquid) of ice occurs when the seawater temperature is below the melting temperature of $O^{\circ}$C \citep{mcphee1987dynamics, nicholls2012ocean, malyarenko2020synthesis}. At a low temperature, such as under the Oceanic Antarctic condition where the sea surface temperature is almost $O^{\circ}$C, the dissolution is controlled essentially by transfer of solute to the ice-ocean interface (Rignot and Jacobs2002, Payne et al. 2004, \cite{gayen2016simulation}). The dissolution rate greatly depends on the salt supply, that allows the temperature at the interface to be significantly lower than the freezing temperature of ice. When the dissolution occurs, the interface salinity gradient is non-zero \citep{kerr2015dissolution}. The ablation rate is also affected by the buoyancy or shear turbulent flux regimes; these regimes are defined based on the flow velocity within the boundary layer \citep{wells2008geophysical}. The dissolution and the melting of ice take place within the boundary layer next to the ice-ocean. Hence, its knowledge is essential in predicting the melting rate and the future rise of seawater.
+	Ocean circulation leads to ice ablation in different geophysical conditions: ice shelves, glaciers, and ocean ice. The ablation is referred to as the thermodynamics of ice loss controlled by phase change into the ocean depending on the ocean and ice temperatures and composition \citep{malyarenko2020synthesis}. The ablation can be categorized into two thermal regimes depending on the ocean temperature and ice freezing temperature: melting or dissolution. The ice melting occurs due to the turbulent transport of salt and heat to the ice face \citep{gayen2016simulation}. It also occurs when the seawater is significantly warm.
 	
-	The thermodynamic models of ice-ocean interaction is commonly described via the three equation formulation \citep{holland1999modeling}, where the conservation of heat and salt play a key role in the prediction of the interface temperature, salinity and dissolution rate. The salinity is dependent of temperature and pressure at the interface. According to \cite{malyarenko2020synthesis}, although the use of the salt and heat conservation are currently widespread in ocean models, several terms are still not well constrained by observations. The coefficients used in the parameterization of heat, salt transfer from the far field to the ice-ocean interface show the greatest dispersion. A lack of observations near the ice face introduces uncertainty in the understanding of the governing physical processes and leads to large uncertainties regarding how key processes are modeled \citep{malyarenko2020synthesis}.
+    In contrast, the dissolution (phase change from solid to liquid) of ice occurs when the seawater temperature is below the melting temperature of $O^{\circ}$C \citep{mcphee1987dynamics, nicholls2012ocean, malyarenko2020synthesis}. At a low temperature, such as under the Oceanic Antarctic condition where the sea surface temperature is almost $O^{\circ}$C, the dissolution is controlled essentially by transfer of solute to the ice-ocean interface (Rignot and Jacobs2002, Payne et al. 2004, \cite{gayen2016simulation}). The dissolution rate greatly depends on the salt supply, which allows the temperature at the interface to be significantly lower than the freezing temperature of ice. When the dissolution occurs, the interface salinity gradient is non-zero \citep{kerr2015dissolution}. The ablation rate is also affected by the buoyancy or shear turbulent flux regimes; these regimes are defined based on the flow velocity within the boundary layer \citep{wells2008geophysical}. The dissolution and the melting of ice take place within the boundary layer next to the ice ocean. Hence, its knowledge is essential in predicting the melting rate and the future rise of seawater.
 	
-    To understand the dissolution processes and the melting at the ice shelves, \cite{jenkins2010observations} conducted measurements with an autonomous underwater vehicle near the Pine Island Glacier. They provided a detailed and spatially complete set of observations from the water column near the ice cavity. However, these measurements are very challenging for the flow field near the ice-ocean interface. Only the result from laboratory experiments on ice melting under oceanic conditions is available. 
+	The thermodynamic models of ice-ocean interaction are commonly described via the three equation formulation \citep{holland1999modeling}, where the conservation of heat and salt plays a vital role in predicting the interface temperature, salinity, and dissolution rate. The salinity is dependent on temperature and pressure at the interface. According to \cite{malyarenko2020synthesis}, although salt and heat conservation are currently widespread in ocean models, several terms are still not well constrained by observations. The coefficients used in the parameterization of heat, salt transfer from the far-field to the ice-ocean interface show the greatest dispersion. A lack of observations near the ice face introduces uncertainty in understanding the governing physical processes and leads to significant uncertainties regarding how critical processes are modeled \citep{malyarenko2020synthesis}.
+	
+	\cite{jenkins2010observations} conducted measurements with an autonomous underwater vehicle near the Pine Island Glacier to understand the dissolution processes and the melting at the ice shelves. They provided a detailed and spatially complete set of observations from the water column near the ice cavity. However, these measurements are very challenging for the flow field near the ice-ocean interface. Only the result from laboratory experiments on ice melting under oceanic conditions is available.
+	
+	The recent work of \cite{wells2011melting} analyzed the thermal and compositional boundary layer structure during the melting and dissolution. They determined the condition for the transition between the melting and dissolving regimes. However, another study pointed out that their analysis can not predict the dissolution or melting of large bodies of ice, especially in the polar ocean, because of turbulence that occurs from the connective flow after a vertical distance of 10-20 cm. \cite{gayen2016simulation}, in their work, also analyzed the structure of the boundary layer and concluded that it influences the dissolution velocity. Their results showed that the dissolution velocity is smaller due to a ticker thermal boundary layer in the laminar regime. However, dissolution velocity and temperature at the interface increase rapidly with a height from the bottom in the transition region.
     
-    The recent work of \cite{wells2011melting} analyzed the thermal and compositional boundary layer structure during the melting and dissolution. They determined the condition for the transition between the melting and dissolving regimes. However, another study pointed out that their analysis can not be used to predict dissolution or melting of large bodies of ice, especially in the polar ocean, because of turbulence that occurs from the connective flow after a vertical distance of 10-20 cm. \cite{gayen2016simulation} in their work, also analyzed the structure of the boundary layer and concluded that it influences the dissolution velocity. Their results showed that the dissolution velocity is smaller due to a ticker thermal boundary layer in the laminar regime. However, dissolution velocity and temperature at the interface increase rapidly with a height from the bottom in the transition region. 
     
-    The simulation performed in this work follows the work done by \cite{gayen2016simulation} with some modification on the physical assumption using spectral method or continuous Galerkin (CG) method in one dimension. The back-ward differentiation formula (BDF3) method have been used for the time integration. The same ice-ocean properties and parameters have been used in our simulation to investigate the temperature and salinity profiles at the interface. In what follows we described the two thermal regimes, melting and dissolution followed by the governing equation that described the ocean system. The remaining sections of this work contain some test test cases to verify the correctness of the CG methods followed the ice-ocean simulations results and conclusion. %The convection and dissolution rate are generated when an ice wall dissolves into seawater under Antarctic ocean conditions.
+    The simulation performed in this work follows the work done by \cite{gayen2016simulation} with some modification on the physical assumption using a spectral method or continuous Galerkin (CG) method in one dimension. The backward differentiation formula (BDF3) method is used for the time integration. The same ice-ocean properties and parameters have been used in our simulation to investigate the temperature and salinity profiles at the interface. In what follows, we described the two thermal regimes, melting and dissolution, followed by the governing equation that described the ocean system. The remaining sections of this work contain some test cases to verify the correctness of the CG methods followed the ice-ocean simulations results and conclusion
 	
 	
 	\section{Thermal regimes}
 	
-	
-	The ablation of ice releases melt of different composition into ocean, and the difference in the density of the freshwater and ocean can driven by the convection in the ocean, which enhances heat and mass transfer from the sea water and hence the rate of ablation. The ablation is a process that allows ice to lose mass by phase change. The change of phase during the dissolution occurs in order to maintian chemical equilibrium at the ice face while the phase change during melting is governed by heat transfer. Based on the previous studies \citep{wells2011melting, kerr2015dissolution}, the difference between melting and dissolving is illustrated through temperature and salinity profiles in boundary layer.
+	The ablation of ice releases melts of different compositions into the ocean. The difference in density of freshwater and ocean can be driven by convection in the ocean, which enhances heat and mass transfer from seawater and hence the rate of ablation. The ablation is a process that allows ice to lose mass by phase change. The phase change during the dissolution occurs to maintain chemical equilibrium at the ice face, while the phase change during melting is governed by heat transfer. Based on the previous studies \citep{wells2011melting, kerr2015dissolution}, the difference between melting and dissolving is illustrated through temperature and salinity profiles in the boundary layer.
 	
 	\begin{figure}[H]
 		
@@ -122,10 +124,11 @@
 		
 		\caption{Schematic illustration of (a) dissolving and (b) melting of ice into saline water. The red line shows the temperature profile while the blue line represents the salinity profiles.}
 	\end{figure}
+
+
+	During the dissolution, a more significant diffusive salt flux inside the boundary layer leads to a larger salinity at the interface, depressing the freezing point temperature \citep{gayen2016simulation}. The heat transfer rate through the molecular sublayer can be two orders of magnitude higher than the salt transfer rate \citep{mcphee1987dynamics,malyarenko2020synthesis}. Therefore, salt transfer plays a limiting role in the rate of phase change. Alternatively, during the melting, the phase change is limited by how fast the heat is transferred from the ocean to the ice face because the rate of phase change is unaffected by how quickly salt can be transferred \citep{malyarenko2020synthesis}. During the dissolution, the ice face salinity gradient is non-zero \citep{kerr2015dissolution}; the ambient salinity differs from the interface salinity, and the interface temperature is below the freezing point temperature of the ice in pure water.
 	
-	During the dissolution, a larger diffusive salt flux inside the boundary layer leads to a larger salinity at the interface where it depresses the freezing point temperature \citep{gayen2016simulation}. The rate of heat transfer through the molecular sublayer can be two orders of magnitude higher than the salt transfer rate \citep{mcphee1987dynamics,malyarenko2020synthesis}. Therefore, the salt transfer play the limiting role in the rate of phase change. Alternatively, during the melting, the phase change is limited by how fast the heat is transferred from the ocean to the ice face because the rate of phase change is unaffected by how quickly salt can be transferred \citep{malyarenko2020synthesis}. During the dissolution, the ice face salinity gradient is non-zero \citep{kerr2015dissolution}; the ambient salinity differs from the interface salinity and the interface temperature is below the freezing point temperature of the ice in pure water.
-	
-	During the melting, the meltwater release is sufficiently rapid for a freshwater layer to develop immediately adjacent to the interface. During this process, only the temperature profile shows an appreciable gradient at the interface. Therefore, the melting rate is limited by the heat transfer. The thermal regime determines wheter the ice is dissolving or melting, and impacts the structure of the ocean layer in the immediate vicinity of the ice face.
+	The meltwater release is sufficiently rapid during the melting for a freshwater layer to develop immediately adjacent to the interface. During this process, only the temperature profile shows an appreciable gradient at the interface. Therefore, the melting rate is limited by heat transfer. The thermal regime determines whether the ice is dissolving or melting and impacts the structure of the ocean layer near the ice face.
 	
 	\section{Governing Equations}
 	
@@ -133,9 +136,9 @@
 	
 	\begin{align}
 		\nabla\cdot\mathrm{u} &= 0,\\
-		\dfrac{D\mathrm{u}}{Dt} & = -\dfrac{1}{\rho_0}\nabla p + \nu\nabla^2\mathrm{u} - \dfrac{\Delta\rho}{\rho_0}g\mathbf{k},\\
-		\dfrac{D\mathrm{T}}{Dt} & = \kappa_T\nabla^2\mathrm{T} ,\\ \label{eq:3}
-		\dfrac{D\mathrm{S}}{Dt} & = \kappa_S\nabla^2\mathrm{S} ,\\ \label{eq:4}
+		\dfrac{D\mathrm{u}}{Dt} & = -\dfrac{1}{\rho_0}\nabla p + \nu\nabla^2\mathrm{u} - \dfrac{\Delta\rho}{\rho_0}g\mathbf{k},\\\label{eq:e3}
+		\dfrac{D\mathrm{T}}{Dt} & = \kappa_T\nabla^2\mathrm{T} ,\\ \label{eq:e4}
+		\dfrac{D\mathrm{S}}{Dt} & = \kappa_S\nabla^2\mathrm{S} ,\\ 
 		\Delta\rho &=\rho_0\left[ \beta(S-S_w) - \alpha(T-Tw)\right].
 	\end{align}
 
@@ -149,7 +152,7 @@
 	
 	At the left-hand side of the domain, the vertical ice face of height $H$ is placed and and it is in contact with seawater at initial temperature $T_w$ and salinity $S_w$. The right-hand side of the domain has an open boundary condition.
 	
-	In this work, we restrained our models into one dimension. The focus is on the temperature and salinity profile at the ice-ocean interface, so the simulation considers only the equations $(\ref{eq:3})$ and $(\ref{eq:4})$ that describe the diffusion of temperature and salinity. The equations $(\ref{eq:3})$ and $(\ref{eq:4})$ in one dimension becomes
+	In this work, we restrained our models into one dimension. The focus is on the temperature and salinity profile at the ice-ocean interface, so the simulation considers only the equations $(\ref{eq:e3})$ and $(\ref{eq:e4})$ that describe the diffusion of temperature and salinity. The equations $(\ref{eq:e3})$ and $(\ref{eq:e4})$ in one dimension becomes
 	
 	\begin{eqnarray}
 		\label{eq:6}
@@ -161,19 +164,19 @@
 	
 	\section{Vertical ice face}
 	
-	A plume of meltwater rising along the ice face sustains convection and the plume volume flux grows with height \citep{jenkins2011convection}. The ablation rate depends not only on the thermal and salt diffusivities, but also on the structure of the boundary layer. In the laminar regime, the ablation rate is smaller due to thicker thermal boundary layer, while within the transition region the interface temperature and ablation rate increase rapidly with the rising plume \citep{gayen2016simulation}. In the works done by \cite{kerr2015dissolution} and \cite{gayen2016simulation}, where they considered vertical ice adjacent to the ocean, the dissolution rate was controlled by the buoyancy-driven and it is independent of the depth and plume velocity. They have shown in their analysis that the ablation rate is 
+	A meltwater plume rising along the ice face sustains convection, and the plume volume flux grows with height \citep{jenkins2011convection}. The ablation rate depends not only on the thermal and salt diffusivities but also on the structure of the boundary layer. In the laminar regime, the ablation rate is lower due to the thicker thermal boundary layer. At the same time, within the transition region, the interface temperature and ablation rate increase rapidly with the rising plume \citep{gayen2016simulation}. In the works done by \cite{kerr2015dissolution} and \cite{gayen2016simulation}, where they considered vertical ice adjacent to the ocean, the dissolution rate is controlled by the buoyancy-driven, and it is independent of the depth and plume velocity. They have shown in their analysis that the ablation rate is 
 	
 	\begin{equation}
 	    V = constant\times (T_w-T_L)^{1.34},
 	\end{equation}
 	
-	which is consistent with the theory prediction. They authors also pointed out that when the ambient temperature exceeds $3-4^{\circ} C$ above the freezing point temperature, a transition into turbulent melting is approached and the interface temperature is overestimated.
+	which is consistent with the theory prediction. The authors also pointed out that when the ambient temperature exceeds $3-4^{\circ} C$ above the freezing point temperature, a transition into turbulent melting is approached, and the interface temperature is overestimated.
 	
-	Other theoretical scaling for both vertical and  horizontal boundaries suggests the existence of a second regime of turbulent natural convection at high Rayleigh numbers ($R_a> 10^{16}$), where the thickness of the inner laminar boundary layer near the ice face is controlled by shear production rather than convective production of turbulence \citep{grossmann2000scaling, wells2008geophysical,kerr2015dissolution,gayen2016simulation}. The transition between buoyancy-driven and shear-driven regimes is predicted to happen at larger Rayleigh number $R_a \thicksim 10^{16}$ for thermal convection in air. However, for compositional convection during ice dissolution, the transition is predicted to occur at Rayleigh number $R_a \thicksim 10^{21}$ \citep{kerr2015dissolution,gayen2016simulation}.
+	Another theoretical scaling for both vertical and horizontal boundaries suggests the existence of the second regime of turbulent natural convection at high Rayleigh numbers ($R_a> 10^{16}$). During that regime, the thickness of the inner laminar boundary layer near the ice face is controlled by shear production rather than convective production of turbulence \citep{grossmann2000scaling, wells2008geophysical,kerr2015dissolution,gayen2016simulation}. The transition between buoyancy-driven and shear-driven regimes is predicted to happen at more significant Rayleigh number $R_a \thicksim 10^{16}$ for thermal convection in air. However, for compositional convection during ice dissolution, the transition is predicted to occur at Rayleigh number $R_a \thicksim 10^{21}$ \citep{kerr2015dissolution,gayen2016simulation}.
 
     \section{Boundary conditions}
     
-    	The freezing point of seawater is a weakly nonlinear function of salinity and linear function of pressure \citep{millero1978freezing}. However, a linearized form is used in most of the studies in order to simply the solution to the three-equations system. The relationship between the temperature and salinity at the ice-ocean interface, $T_b$ and $S_b$ is given by
+    	The freezing point of seawater is a weakly nonlinear function of salinity and a linear function of pressure \citep{millero1978freezing}. However, a linearized form is used in most of the studies to simplify the solution to the three-equations system. The relationship between the temperature and salinity at the ice-ocean interface, $T_b$ and $S_b$ is given by
 		
 		\begin{equation}
 			\label{eq:1}
@@ -433,17 +436,16 @@
 	
 	\section{Numerical method: Spectral method}
 	
-	A spectral method method present some advantage in ocean modeling, problem involving the complex interaction of stratified flows with topography. With elemental grid refinement or increasing in the order of interpolation polynomial, spectral element method offers a good convergence \citep{ilicak2009non}. The method present no significant numerical dissipation and provides geometrical flexibility, especially for problem in complex geometry. Another advantage is the scalability of its code in parallel machines.
+	A spectral method presents some advantages in ocean modeling, which involves the complex interaction of stratified flows with topography. The spectral element method offers a good convergence with elemental grid refinement or increasing in the order of interpolation polynomial \citep{ilicak2009non}. The method presents no significant numerical dissipation and provides geometrical flexibility, especially for problems in complex geometry. Another advantage is the scalability of its code in parallel machines
 	
-	Unlike the DNS method used by \cite{gayen2016simulation}, we used the CG method with the implicit time integration BDF3. A summary of the CG method, as it was implemented to obtain the results in this study is described as follows using the following equation.
+	Unlike the DNS method used by \cite{gayen2016simulation}, we used the CG method with the implicit time integration BDF3. As it was implemented to obtain the results in this study, a summary of the CG method is described using the following equation.
 	
 	\begin{equation}
+	\label{eq:diff}
 	    \dfrac{\partial q(x,t)}{\partial t} = \dfrac{\partial^2 q(x,t)}{\partial x^2},
 	\end{equation}
 	
-	with either Neumann or Robin boundary conditions.
-	
-	We divide the problem domain $\Omega\in\mathbb{R}$ into $N_e$ elements
+	\noindent with either Neumann or Robin boundary conditions. We divide the problem domain $\Omega\in\mathbb{R}$ into $N_e$ elements
 	
 	$$\Omega = \bigcup_{i=1}^{Ne}\Omega_e.$$
 	We create an approximation $q_N^{(e)}(x,t)$ to $q(x,t)$ within each element $\Omega_e$ using 
@@ -455,7 +457,7 @@
 	
 	where $M$ is the number of nodes in the element, $\psi_j$ is a basis function, $q_j^{(e)}$ is the expansion coefficient and the superscript $^{(e)}$ denotes the element index.
 	
-	We expand both sides of equation $(\ref{eq:6})$ using the approximation $(\ref{eq:17})$, multiplying with the basis function $\psi_i$ and integrate within each element 
+	We expand both sides of equation $(\ref{eq:diff})$ using the approximation $(\ref{eq:17})$, multiplying with the basis function $\psi_i$ and integrate within each element 
 	
 	\begin{equation}
 	    \int_{\Omega_e}\psi_i\dfrac{\partial q_N^{(e)}}{\partial t}d{\Omega_e} = \int_{\Omega_e}\psi_i\dfrac{\partial^2 q_N^{(e)}}{\partial^2 x}d{\Omega_e}
@@ -468,7 +470,7 @@
 	    \label{eq:20}
 	\end{equation}
 	
-	The first term in the right-hand-side is used to apply the boundary conditions. Due to the continuity across element interfaces, the inter-element edges vanish when apply the direct stiffness summation to the first term in the right-hand-side.
+	The first term on the right-hand side is used to apply the boundary conditions. Due to the continuity across element interfaces, the inter-element edges vanish when the direct stiffness summation is applied to the first term on the right-hand side.
 	
 	\begin{comment}
 	\subsection{Neumann boundary conditions}
@@ -518,7 +520,7 @@
 	
 	\section{Results}
 	
-	We begin this section by presenting some convergence test cases for the CG method using both, Neumann and Robin boundary conditions to validate the correctness of the code. Followed by the temperature and salinity profiles results at the ice-ocean interface, and dissolution rate against variation in far-field salinity.
+	We begin this section by presenting some convergence test cases for the CG method using both Neumann and Robin boundary conditions to validate the correctness of the code. It is followed by the temperature and salinity profile results at the ice-ocean interface and dissolution rate against variation in far-field salinity.
 	
 	\subsection{Ideal test for numerical verification}
 	
@@ -561,42 +563,41 @@
 		\label{fig:4}
 	\end{figure}
 	
-	In both figure, the numerical method CG produces a very good accuracy and order of convergences. The convergence rates are approximately $N+1$, which is in the line with the literature. Here $N$ denotes the order of basis polynomial used in the numerical integration.\\
+	In both figure, the numerical method CG produces a very good accuracy and order of convergences. In both figures, the numerical method CG produces excellent accuracy and order of convergence. The convergence rates are approximately $N+1$, $N$ denotes the order of basis polynomial used in the numerical integration.\\
 	
 	\subsection{Temperature profile at the ice-ocean interface}
 	
-	To solve the PDEs that described the thermal and salinity behaviors at the ice-ocean interface, some physical constants have been used, the same as in \cite{jenkins2001role}. The value of these constants is summarized in table below.\\
+	The value of some physical constants has been used in solving the PDEs that described the thermal and salinity behaviors at the ice-ocean interface, the same as in Jenkins et al. (2001). The value of these constants is summarized in the table below.\\
 	
 	\begin{tabular}{ |p{8cm}||p{2cm}|p{3cm}|p{3cm}|}
-     \hline
-     \multicolumn{4}{|c|}{Model parameters and constants} \\
-     \hline
-     Parameter &Symbol&Units&Value\\
-     \hline
-     Salinity coefficient of freezing equation &a& $^{\circ}$C $psu^{-1}$&   $-5.73\times10^{-2}$\\
-     Constant coefficient of freezing equation &b&  $^{\circ}$C  & $8.72\times 10^{-2}$\\
-     Pressure coefficient of freezing equation& c&$^{\circ}$C $Pa^{-1} $& $-7.53\times10^{-8}$\\
-     Latent heat of the ice    & $L_i$ & J $kg^{-1}$& $3.35\times 10^{5}$\\
-     Thermal diffusivity& $\kappa_S$  & $m^2 s^{-1}$&$7.4\times 10^{-7}$\\
-     Salinity diffusivity & $\kappa_T$  & $m^2 s^{-1}$   &$1.3\times 10^{-7}$\\
-     Temperature of the far-field& $T_w$  & $^{\circ}$C & 2.3\\
-     Salinity of the far-field&$S_w$& psu&  35  \\
-     %Temperature at ice shelf surface& T_b& $^{\circ}$C & \\
-     %Salinity at ice shelf surface & S_b& psu & \\
-     Density of the ice & $\rho_i$& $kg m^{-3}$& 920\\
-     Density of the seawater & $\rho_w$ & $kg m^{-3}$& 1000\\
-     %Melt rate & V & m s^{-1}& \\
-     Thermal exchange velocity & $\gamma_T$ & $m s^{-1}$& $5\times 10^{-3}$\\
-     Salinity exchange velocity & $\gamma_S$ & $m s^{-1}$& $0.04\gamma_T$ \\
-     Specific heat of saline water& $c_w$ & $J kg^{-1}K^{-1}$ & 3974.0\\
-     Specific heat of ice & $c_i$ & $J kg^{-1} K^{-1}$ & 2009.0\\
-     \hline
-    \end{tabular}
+		\hline
+		\multicolumn{4}{|c|}{Model parameters and constants} \\
+		\hline
+		Parameter &Symbol&Units&Value\\
+		\hline
+		Salinity coefficient of freezing equation &a& $^{\circ}$C $psu^{-1}$&   $-5.73\times10^{-2}$\\
+		Constant coefficient of freezing equation &b&  $^{\circ}$C  & $8.72\times 10^{-2}$\\
+		Pressure coefficient of freezing equation& c&$^{\circ}$C $Pa^{-1} $& $-7.53\times10^{-8}$\\
+		Latent heat of the ice    & $L_i$ & J $kg^{-1}$& $3.35\times 10^{5}$\\
+		Thermal diffusivity& $\kappa_S$  & $m^2 s^{-1}$&$7.4\times 10^{-7}$\\
+		Salinity diffusivity & $\kappa_T$  & $m^2 s^{-1}$   &$1.3\times 10^{-7}$\\
+		Temperature of the far-field& $T_w$  & $^{\circ}$C & 2.3\\
+		Salinity of the far-field&$S_w$& psu&  35  \\
+		%Temperature at ice shelf surface& T_b& $^{\circ}$C & \\
+		%Salinity at ice shelf surface & S_b& psu & \\
+		Density of the ice & $\rho_i$& $kg m^{-3}$& 920\\
+		Density of the seawater & $\rho_w$ & $kg m^{-3}$& 1000\\
+		%Melt rate & V & m s^{-1}& \\
+		Thermal exchange velocity & $\gamma_T$ & $m s^{-1}$& $5\times 10^{-3}$\\
+		Salinity exchange velocity & $\gamma_S$ & $m s^{-1}$& $0.04\gamma_T$ \\
+		Specific heat of saline water& $c_w$ & $J kg^{-1}K^{-1}$ & 3974.0\\
+		Specific heat of ice & $c_i$ & $J kg^{-1} K^{-1}$ & 2009.0\\
+		\hline
+	\end{tabular}
     
     \bigskip 
     
-    The main goal of this work in to investigate the behavior of temperature and salinity at the interface, and they affect the dissolution rate.
-    The simulations are initialized with the far-field temperature, $T_w$ and salinity, $S_w$. In all the simulations for temprature and salinity profiles, the ambient salinity was set to be 35 psu.
+    The main goal of this work is to investigate the behavior of temperature and salinity at the interface, and they affect the dissolution rate. The simulations are initialized with the far-field temperature, $T_w$, and salinity, $S_w$. In all the simulations for temperature and salinity profiles, the ambient salinity is set to be 35 psu.
 	
 	\begin{figure}[H]
 	    
@@ -606,7 +607,8 @@
 	    \label{fig:2}
 	\end{figure}
 	
-	Temperature profiles obtain from this study are shown in the figure $\ref{fig:2}$ for three different far-field temperature at constant salinity ($S_w = 35$ psu) along with those in \citet{gayen2016simulation}. The temperature increases from the mid-depth at the ice face through the plume to a steady value. The decreasing in ambient temperature affects the temperature profile at the boundary. The discrepancies observed in the current results and those in  \cite{gayen2016simulation} come from the fact that in the paper the full 3D incompressible Navier-Stokes equations  have been solved and advection terms have been added to the temperature and salinity equations. A similar results were obtained by \cite{jenkins2011convection} with stratification of the ambient temperature where their results showed that as the freshwater from the ice inflow mixes with the ambient seawater, the temperature increases until it reaches a steady value. 
+	
+	Temperature profiles obtained from this study are shown in figure $\ref{fig:2}$ for three different far-field temperatures at constant salinity ($S_w = 35$ psu) along with those in \citet{gayen2016simulation}. The temperature increases from the mid-depth at the ice face through the plume to a steady value. The decrease in ambient temperature affects the temperature profile at the boundary. The discrepancies observed in the current results and those in \citet{gayen2016simulation} come from the fact that in the paper, the full 3D incompressible Navier-Stokes equations have been solved, and advection terms have been added to the temperature and salinity equations. Similar results were obtained by \cite{jenkins2011convection} with the stratification of the ambient temperature. Their results showed that as the freshwater from the ice inflow mixes with the ambient seawater, the temperature increases until it reaches a steady value.
 	
 	\begin{figure}[H]
 	    \centering 
@@ -615,7 +617,7 @@
 	    \label{fig:3}
 	\end{figure}
 	
-	Figure $\ref{fig:3}$ shows the behavior of the salinity at near the ice face. Decreasing or increasing in the far-field temperature affects the interface region and the sub-layers in temperature and salinity begin to grow. Examining the salinity profiles in figure $\ref{fig:3}$ and temperature profiles in $\ref{fig:2}$, the haline sub-layer grows slower than the thermal sub-layer due t the larger molecular diffusivity of temperature.
+	Figure $\ref{fig:3}$ shows the behavior of the salinity near the ice face. Decreasing or increasing in the far-field temperature affects the interface region, and the sub-layers in temperature and salinity begin to grow. Examining the salinity profiles in figure $\ref{fig:3}$ and temperature profiles in $\ref{fig:2}$, the haline sub-layer grows slower than the thermal sub-layer due to t the larger molecular diffusivity of temperature.
 	
 	\subsection{Melt rate}
 	
@@ -626,7 +628,7 @@
 	    \label{fig:4}
 	\end{figure}
 	
-	Figure $\ref{fig:4}$ depicts variations of the melt rate at different far-field temperatures ($0.3, 2.3$ and $5.4$). The melt rate increases as the ambient temperature of the seawater increases. This is reasonable because the larger far-field temperature enhances the heat transfer rate which results in increasing the melting rate. Similarly, increasing salinity at constant far-field temperature leads to increasing in melt rate. These results agree well with those produced in \citep{gayen2016simulation}. However, the melt rates in this work are higher. This can be explained by the fact that in the formula for melt rate, salinity at the interface we did not neglect the conduction within the ice ($c_i \neq 0)$ and $T_b = \lambda_1S_b+\lambda_2+\lambda_3p_b$. The increasing in the melt rate as the salinity augment can be explained by the fact that a larger salinity leads to a larger salt diffusive flux at the interface and within the boundary layer. \cite{jenkins2011convection} in their simulation with stratified ambient temperature also found that the melt rate increases as the buoyancy, and the sensible heat fluxes rise.
+	Figure 5 depicts variations of the melt rate at different far-field temperatures (0.3, 2.3, and 5.4). It increases as the ambient temperature of the seawater increases. The results are reasonable because the larger far-field temperature enhances the heat transfer rate, increasing the melting rate. Similarly, increasing salinity at constant far-field temperature leads to an increase in melt rate. These results agree well with those produced in \citep{gayen2016simulation}. However, the melt rates in this work are higher, and this can be explained by the fact that we did not neglect the conduction within the ice $c_i \neq 0)$ and $T_b = a S_b+b+c p_b$. The increase in the melt rate as the salinity augment can be explained by the fact that a larger salinity leads to a larger salt diffusive flux at the interface and within the boundary layer. \cite{jenkins2011convection}), in their simulation with stratified ambient temperature, also found that the melt rate increases as the buoyancy and the sensible heat fluxes rise.
 	
 	%\subsection{Buoyancy flux}
 	

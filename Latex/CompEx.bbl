@@ -1,4 +1,4 @@
-\begin{thebibliography}{14}
+\begin{thebibliography}{13}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -89,12 +89,5 @@ FJ~Millero.
 Mehmet Il{\i}cak, Tamay~M {\"O}zg{\"o}kmen, Emin {\"O}zsoy, and Paul~F Fischer.
 \newblock Non-hydrostatic modeling of exchange flows across complex geometries.
 \newblock \emph{Ocean Modelling}, 29\penalty0 (3):\penalty0 159--175, 2009.
-
-\bibitem[Jenkins et~al.(2001)Jenkins, Hellmer, and Holland]{jenkins2001role}
-Adrian Jenkins, Hartmut~H Hellmer, and David~M Holland.
-\newblock The role of meltwater advection in the formulation of conservative
-  boundary conditions at an ice--ocean interface.
-\newblock \emph{Journal of physical oceanography}, 31\penalty0 (1):\penalty0
-  285--296, 2001.
 
 \end{thebibliography}

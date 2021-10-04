@@ -3,44 +3,44 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: CompEx.aux
 The style file: unsrtnat.bst
 Database file #1: refComp.bib
-You've used 14 entries,
+You've used 13 entries,
             2481 wiz_defined-function locations,
-            648 strings with 7146 characters,
-and the built_in function-call counts, 5744 in all, are:
-= -- 503
-> -- 284
+            640 strings with 6882 characters,
+and the built_in function-call counts, 5332 in all, are:
+= -- 467
+> -- 263
 < -- 8
-+ -- 110
-- -- 82
-* -- 461
-:= -- 907
-add.period$ -- 42
-call.type$ -- 14
-change.case$ -- 28
-chr.to.int$ -- 14
-cite$ -- 14
-duplicate$ -- 278
-empty$ -- 519
-format.name$ -- 106
-if$ -- 1209
++ -- 102
+- -- 76
+* -- 424
+:= -- 842
+add.period$ -- 39
+call.type$ -- 13
+change.case$ -- 26
+chr.to.int$ -- 13
+cite$ -- 13
+duplicate$ -- 259
+empty$ -- 481
+format.name$ -- 99
+if$ -- 1123
 int.to.chr$ -- 1
-int.to.str$ -- 15
-missing$ -- 14
-newline$ -- 78
-num.names$ -- 42
-pop$ -- 101
+int.to.str$ -- 14
+missing$ -- 13
+newline$ -- 73
+num.names$ -- 39
+pop$ -- 94
 preamble$ -- 1
-purify$ -- 14
+purify$ -- 13
 quote$ -- 0
-skip$ -- 171
+skip$ -- 161
 stack$ -- 0
-substring$ -- 346
-swap$ -- 41
+substring$ -- 319
+swap$ -- 39
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 98
+type$ -- 91
 warning$ -- 0
-while$ -- 53
+while$ -- 49
 width$ -- 0
-write$ -- 189
+write$ -- 176
