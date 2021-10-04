@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  3 OCT 2021 22:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  3 OCT 2021 22:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -522,17 +522,17 @@ eady used, duplicate ignored
                    \relax 
 l.108 	\section
                {Thermal regimes} [1]
-<dissolution.png, id=111, 441.65pt x 336.25626pt>
-File: dissolution.png Graphic file (type png)
-<use dissolution.png>
-Package pdftex.def Info: dissolution.png  used on input line 116.
-(pdftex.def)             Requested size: 227.62204pt x 173.30473pt.
-<melting.png, id=113, 441.65pt x 336.25626pt>
-File: melting.png Graphic file (type png)
-<use melting.png>
-Package pdftex.def Info: melting.png  used on input line 118.
-(pdftex.def)             Requested size: 227.62204pt x 173.30473pt.
- [2 <./dissolution.png> <./melting.png>]
+<dissolution1.png, id=111, 428.60126pt x 338.26375pt>
+File: dissolution1.png Graphic file (type png)
+<use dissolution1.png>
+Package pdftex.def Info: dissolution1.png  used on input line 116.
+(pdftex.def)             Requested size: 227.62204pt x 179.64539pt.
+<melting1.png, id=113, 428.60126pt x 338.26375pt>
+File: melting1.png Graphic file (type png)
+<use melting1.png>
+Package pdftex.def Info: melting1.png  used on input line 118.
+(pdftex.def)             Requested size: 227.62204pt x 179.64539pt.
+ [2 <./dissolution1.png> <./melting1.png>]
 <domain.png, id=134, 275.0275pt x 316.18124pt>
 File: domain.png Graphic file (type png)
 <use domain.png>
@@ -600,7 +600,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 644.
  ) 
 Here is how much of TeX's memory you used:
  10019 strings out of 480608
- 149401 string characters out of 5903631
+ 149413 string characters out of 5903631
  433730 words of memory out of 5000000
  25638 multiletter control sequences out of 15000+600000
  549686 words of font info for 61 fonts, out of 8000000 for 9000
@@ -630,7 +630,7 @@ mf-dist/fonts/type1/public/cm-super/sfrm0900.pfb></usr/local/texlive/2020/texmf
 ist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2020/texmf-dis
 t/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive/2020/texmf-dist/
 fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on CompEx.pdf (14 pages, 614727 bytes).
+Output written on CompEx.pdf (14 pages, 637135 bytes).
 PDF statistics:
  410 PDF objects out of 1000 (max. 8388607)
  349 compressed objects within 4 object streams
