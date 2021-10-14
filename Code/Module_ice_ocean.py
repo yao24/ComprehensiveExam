@@ -5,7 +5,8 @@
 
 
                                                Author: Yao Gahounzo
-                                                       Computing PhD Student
+                                                       Computing PhD
+                                                       Computational Math, Science and Engineering
                                                        Boise State University
 
                                                Date: September 29, 2021

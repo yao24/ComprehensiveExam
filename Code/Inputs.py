@@ -1,3 +1,23 @@
+
+'''
+                                          ----------------------------------------
+
+                                               COMPREHENSIVE EXAM ARTIFACT
+
+
+                                               Author: Yao Gahounzo
+                                                       Computing PhD
+                                                       Computational Math, Science and Engineering
+                                                       Boise State University
+
+                                               Date: September 29, 2021
+
+                                          ----------------------------------------
+
+
+'''
+
+
 # Import some modules
 from numpy import *
 from time import perf_counter
