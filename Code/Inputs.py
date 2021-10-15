@@ -19,6 +19,8 @@
 
 
 # Import some modules
+from matplotlib.pylab import*
+
 from numpy import *
 from time import perf_counter
 from scipy.sparse import csr_matrix
@@ -289,3 +291,285 @@ def ice_simulation(N,Q,nel,Np, ax, bx, integration_type,method_type,ti_method, t
                                     ti_method, time_method)
     
     return S,T,coord,intma,tf
+
+
+
+def Visualisation(order,Nv,test_case,ti_method,time_method,integration_type,method_type,icase,TW,X_gayen,Y_gayen):
+    
+    '''
+        Visualisation function
+    
+        Order           : contains the list of the polynomial order used in the numerical integration
+        N_element       : contains the number of elements in the domain
+        time_method     : time integration method
+        ti_method       : stages of the time integration method (implicit Runge Kutta method)
+        icase           : select the time of the boundary conditions you want to test
+        method_type     : continous galerkin (cg) method, it is the only one implemented in Module_ice_ocean
+        integration_type: exact or inexact integration
+        text_case       : select either we are in unit test case or the ice-ocean simulation
+        
+
+    
+    '''
+    
+    if(test_case == 'unit'):      # ideal test case for convergence studies
+
+        # diffusion coefficients (diffusivity)
+        c_diff = coeff_diffu(icase)
+
+        # Boundary conditition type                   
+
+        # Robin: alpha = 1, beta != 0
+        # Neumann: alpha = 1, beta = 0
+        # Dirichlet: alpha = 0, beta = 1
+
+        alpha, beta = boundary_conditions_coeff(icase)    # type of BC
+
+        # Problem domain
+        ax, bx = domain(icase)
+
+        # Initialization
+        TW = array([1])
+
+        Tfinal = 0.5                        # Duration of the simulation in unit test
+
+        len_el = len(Nv)
+        len_pol = len(order)
+        l2e_norm = zeros((len_pol, len_el))
+        max_norm = zeros((len_pol, len_el))
+
+        Np_array = zeros((len_pol, len_el))  
+
+    elif(test_case == 'ice-ocean'):    # ice-ocean: for ice ocean simulation
+
+        # Simulation domain
+        ax = 0
+        bx = 0.5
+
+        Tfinal = 42                   # Duration of the simulation
+
+        order = array([2])            # polynomial order
+        Nv = array([256])      # Number of element in the domain
+
+    # Initialization
+    u = 1.5
+    
+    
+    for k,Tw in enumerate(TW):                # Loop through the value ambient temperature
+        for iN,N in enumerate(order):
+
+            CFL = 1/(N+1)                     # CFL number
+
+            if (integration_type == 1):       # Inexact integration
+                Q = N
+            elif (integration_type == 2):     # Exact integration
+                Q = N+1
+
+            wall = 0
+
+            for e, nel in enumerate(Nv):
+
+                Np = nel*N + 1                # Global number of grid points in the domain
+
+                # Call of 1D diffusion solver
+                '''
+                outputs:
+                --------
+                qe         : Exact solution
+                q          : Numerical solution
+                coord      : All grid points
+                intma      : Intma(CG/DG)
+                '''
+                tic = perf_counter()
+
+                if(test_case == 'unit'):            # Unit test case
+
+                    # Call of the diffusion solver
+                    qe, q,coord, intma, tf = diff_Solver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol,\
+                                               c_diff,u,CFL, Tfinal, method_type, icase, alpha, beta,\
+                                                     ti_method, time_method)
+
+                    print("\twalltime = {:e}".format(tf))
+
+
+                    # Compute L2- norm
+                    num = sum((q-qe)**2)
+                    denom = sum(qe**2 )
+
+                    e2 = sqrt(num/denom)
+                    l2e_norm[iN,e] = e2
+                    # Compute max-norm
+                    max_norm[iN, e] = max(abs(q-qe))
+                    # Store global number of grid point
+                    Np_array[iN,e] = Np           
+
+                elif(test_case == 'ice-ocean'):    # Ice-ocean 
+
+
+                    # Call the ice-ocean solver from Inputs module
+
+                    '''
+                    outputs:
+                    --------
+                    S          : Salinity
+                    T          : Temperature
+                    coord      : All grid points
+                    intma      : Intma(CG/DG)
+                    '''
+
+                    S,T,coord,intma,tf = ice_simulation(N,Q,nel,Np, ax, bx, integration_type,method_type,\
+                                                        ti_method, time_method,CFL,Tw,Tfinal,u)
+
+                    print("\twalltime = {:e}".format(tf))
+
+                    toc = perf_counter()
+                    wall += toc - tic
+
+                # Form the global grid points for ploting purpose
+
+                x_sol = zeros(Np)
+                for ie in range(1,nel+1):
+                    for i in range(N+1):
+                        ip = int(intma[i,ie-1])
+                        x_sol[ip] = coord[i,ie-1]
+
+
+            # Plots
+            if(test_case == 'ice-ocean'):
+
+                # interpolate the data loaded from Gayen et al. 2016
+                Tgayen = interp(x_sol, X_gayen[k], Y_gayen[k])
+
+                indx = abs(x_sol-0.051).argmin()   # zoom the results near the interface [0,0.05]
+                indx1 = abs(x_sol-0.0162).argmin()   # zoom the results near the interface [0,0.05]
+
+                # Plot the temperature behavior
+                figure(1)
+                rcParams.update({'font.size': 12})
+                p1, = plot(x_sol[:indx], T[:indx], '-', label = 'Tw = {}'.format(Tw))
+                p2, = plot(x_sol[:indx], Tgayen[:indx], ':')
+                ylim([-0.5,5.5])
+                xlabel('x(m)')
+                ylabel('Temperature (˚C)')
+                title('Temperature profile')
+                grid(linestyle = '--', linewidth = 0.5)
+                leg1 = legend(title = 'Far-field temperature',loc = 1)
+                gca().add_artist(leg1)
+                leg2 = legend([p2],['Gayen et al. 2016'],loc = 4)
+                gca().add_artist(leg1)
+
+                # Plot the salinity behavior
+                figure(2)
+                plot(x_sol[:indx], S[:indx], ':', label = '{}'.format(Tw))
+                xlabel('x(m)')
+                ylabel('Salinity (psu)')
+                title('Salinity profile')
+                grid(linestyle = '--', linewidth = 0.5)
+                legend(title = 'Far-field temperature')
+
+
+        # Plot convergence if unit test case
+        if(test_case == 'unit'):
+
+            import cg_graphics           # import cg_graphics module
+            rcParams.update({'font.size': 12})
+
+            figure(1)
+            plot(x_sol,q, '-', label = 'Computed')
+            plot(x_sol,qe, '--', label = 'Exact') 
+            xlabel('x')
+            ylabel('Solutions')
+            title('Exact and Computed ({}) solutions: Time = {}'.format('cg'.upper(), Tfinal))
+            grid(axis='both',linestyle='--')
+            legend()
+            show()   
+
+            figure(2)
+            clf()
+
+            for i,N in enumerate(order):
+
+                if(N >= 3):
+                    p = polyfit(log(Nv[:2]), log(l2e_norm[i][:2]), 1)
+                else:
+
+                    p = polyfit(log(Nv), log(l2e_norm[i]), 1)
+
+                loglog(Nv, l2e_norm[i], '-o',markersize=5, label = 'N = {:d}: rate = {:.2f}'.format(N,p[0]))
+
+                loglog(Nv, exp(polyval(p,log(Nv))), '--')
+
+            cg_graphics.set_xticks(Nv)
+            xlabel('# Elements')
+            ylabel('Error (L2-error)')
+            title('Error vs number of Elements ({:s}, {:s})'.format('cg'.upper(), time_method))
+            grid(axis='both',linestyle='--')
+            legend()
+            show()
+
+
+# End of the simulation
+
+
+
+def Visual_interface(SW, TW):
+
+    '''
+        Visualisation function
+        
+        SW: Array that contains different values of the ambient salinity of the sea-water.
+        TW: Array that contains different values of the ambient temperature of the sea-water.
+    '''
+    
+    figure(3)
+
+    V = zeros(len(SW))
+    
+    
+    for j,Tw in enumerate(TW):
+        
+        for i,Sw in enumerate(SW):
+
+            L = coefF(Tw, gammaS,gammaT, cw, Li, cI, TS, b, c, pb, a, Sw)
+
+            # compute salinity at the boundary
+            SB1, SB2 = SaltB(K,L,M,Sw)
+
+            # Compute melt rate
+            V[i] = Meltrate(Sw, SB2, gammaS)
+    
+        V = 1e6*V
+
+        plot(SW,V,'-o',label = 'Tw = {}'.format(Tw))
+        legend()
+        xlabel('Salinity (psu)')
+        ylabel('Melting rate V ($\mu ms^{-1}$)')
+        grid(linestyle = '--', linewidth = 0.5)
+
+        
+    figure(4)
+    
+    Sw = 35
+    P = 1000
+    
+    # Formulas to compute freezing temperature
+    # http://www.code10.info/index.php?option=com_content&view=article&id=66:
+    # calculating-the-freezing-point-of-seawater&catid=54:cat_coding_algorithms_seawater&Itemid=79
+    TL = (-0.0575 + 1.710523e-3*sqrt(abs(Sw)) - 2.154996e-4*Sw)*Sw - 7.53e-4*P
+
+    TW = array([0,0.3,2.3,3,4.5,5.2,5.8]) - TL
+    TB = zeros(len(TW))
+    
+    for i,Tw in enumerate(TW):
+        
+        L = coefF(Tw, gammaS,gammaT, cw, Li, cI, TS, b, c, pb, a, Sw)
+        
+        SB1, SB2 = SaltB(K,L,M,Sw)
+        
+        TB[i] = a*SB2 + b + c*pb
+        
+    plot(TW,TB,'-o')
+    xlabel('$T_w-T_L$')
+    ylabel('Interface temperature $T_i$(˚C)')
+    grid(linestyle = '--', linewidth = 0.5)   
+    
