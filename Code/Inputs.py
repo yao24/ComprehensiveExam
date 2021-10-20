@@ -294,7 +294,7 @@ def ice_simulation(N,Q,nel,Np, ax, bx, integration_type,method_type,ti_method, t
 
 
 
-def Visualisation(order,Nv,test_case,ti_method,time_method,integration_type,method_type,icase,TW,X_gayen,Y_gayen):
+def Visualisation(order,Nv,test_case,ti_method,time_method,integration_type,method_type,icase,TW,X_gayen,Y_gayen,Tfinal):
     
     '''
         Visualisation function
@@ -331,7 +331,7 @@ def Visualisation(order,Nv,test_case,ti_method,time_method,integration_type,meth
         # Initialization
         TW = array([1])
 
-        Tfinal = 0.5                        # Duration of the simulation in unit test
+        #Tfinal = 0.5                        # Duration of the simulation in unit test
 
         len_el = len(Nv)
         len_pol = len(order)
@@ -346,7 +346,7 @@ def Visualisation(order,Nv,test_case,ti_method,time_method,integration_type,meth
         ax = 0
         bx = 0.5
 
-        Tfinal = 42                   # Duration of the simulation
+        #Tfinal = 42                   # Duration of the simulation
 
         order = array([2])            # polynomial order
         Nv = array([256])      # Number of element in the domain
