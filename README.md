@@ -1,7 +1,8 @@
 
 Overview of the program
 
-This program solves the 1D-diffusion problem using the continuous Galerkin (CG) method. The method is implemented with three different boundary conditions, Dirichlet, Neumann, and Robin. The CG method derivation and all the necessary mathematics are in the file.
+This program solves the 1D-diffusion problem using the continuous Galerkin (CG) method. The method is implemented with three different boundary conditions, Dirichlet, Neumann, and Robin. The CG method derivation and all the necessary mathematics are in the file
+[CG_method](./CG_method.pdf)
 
 
 The main program uses the Module_diffusion and Inputs modules. The Module_diffusion contains all the subroutines needed in the CG method, while the Inputs module contains the inputs data, exact solution, problem domain. The Main_program contains two different test cases: unit' or 'ice-ocean.
