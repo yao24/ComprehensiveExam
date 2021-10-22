@@ -193,7 +193,14 @@ def SaltB(K,L,M,Sw):
     D = L**2 - 4*K*M*Sw
     Sb1 = (-L + sqrt(D))/(2*K) 
     Sb2 = (-L - sqrt(D))/(2*K)
-    return Sb1, Sb2
+    
+    # Check for possitive salinity
+    if(Sb1 > 0):
+        Sb = Sb1
+    elif(Sb2 > 0):
+        Sb = Sb2
+
+    return Sb
 
 
 # Coefficient in the quadratic equation for salinity at the boundary
@@ -533,10 +540,10 @@ def Visual_interface(SW, TW):
             L = coefF(Tw, gammaS,gammaT, cw, Li, cI, TS, b, c, pb, a, Sw)
 
             # compute salinity at the boundary
-            SB1, SB2 = SaltB(K,L,M,Sw)
+            SB = SaltB(K,L,M,Sw)
 
             # Compute melt rate
-            V[i] = Meltrate(Sw, SB2, gammaS)
+            V[i] = Meltrate(Sw, SB, gammaS)
     
         V = 1e6*V
 
@@ -564,9 +571,10 @@ def Visual_interface(SW, TW):
         
         L = coefF(Tw, gammaS,gammaT, cw, Li, cI, TS, b, c, pb, a, Sw)
         
-        SB1, SB2 = SaltB(K,L,M,Sw)
+        SB = SaltB(K,L,M,Sw)
         
-        TB[i] = a*SB2 + b + c*pb
+            
+        TB[i] = a*SB + b + c*pb
         
     plot(TW,TB,'-o')
     xlabel('$T_w-T_L$')

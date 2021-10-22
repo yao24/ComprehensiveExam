@@ -1231,10 +1231,10 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
             L = coefF(Tw, gammaS,gammaT, cw, Li, ci, Ti, b, c, pb, a, Sw)
          
             # compute salinity at the boundary
-            SB1, SB2 = SaltB(K,L,M,Sw)
+            SB = SaltB(K,L,M,Sw)
 
             # Compute melt rate
-            V = Meltrate(Sw, SB2, gammaS)
+            V = Meltrate(Sw, SB, gammaS)
 
             QT[:,0] = T
             RT[:,0] = DhmatrixT@QT[:,0]
@@ -1260,7 +1260,7 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
                 # Apply boundary conditions at the intermediate time step
                 
                 QT[:,i] = bc_temp(GMmatrix_inv,hT, c1, Np, QT[:,i], V, bcst1,dt)
-                QS[:,i] = bc_salt(GMmatrix_inv,hB, c2, Np, QS[:,i],SB2, V, bcst2,dt)
+                QS[:,i] = bc_salt(GMmatrix_inv,hB, c2, Np, QS[:,i],SB, V, bcst2,dt)
             
                 RT[:,i] = DhmatrixT@QT[:,i]
                 RS[:,i] = DhmatrixS@QS[:,i]
@@ -1279,7 +1279,7 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
             # Apply boundary conditions
             
             Tp = bc_temp(GMmatrix_inv,hT, c1, Np, Tp, V, bcst1,dt)
-            Sp = bc_salt(GMmatrix_inv,hB, c2, Np, Sp,SB2, V, bcst2,dt)
+            Sp = bc_salt(GMmatrix_inv,hB, c2, Np, Sp,SB, V, bcst2,dt)
 
             # update the solution q
             T = Tp 
@@ -1320,10 +1320,10 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
             L = coefF(Tw, gammaS,gammaT, cw, Li, ci, Ti, b, c, pb, a, Sw)
 
             # compute salinity at the boundary
-            SB1, SB2 = SaltB(K,L,M,Sw)
+            SB = SaltB(K,L,M,Sw)
             
             # Compute melt rate
-            V = Meltrate(Sw, SB2, gammaS)
+            V = Meltrate(Sw, SB, gammaS)
 
             QT[:,0] = T
             RT[:,0] = DhmatrixT@QT[:,0]
@@ -1349,7 +1349,7 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
                 # Apply boundary conditions at the intermediate time step
                 
                 QT[:,i] = bc_temp(GMmatrix_inv,hT, c1, Np, QT[:,i], V, bcst1,dt)
-                QS[:,i] = bc_salt(GMmatrix_inv,hB, c2, Np, QS[:,i],SB2, V, bcst2,dt)
+                QS[:,i] = bc_salt(GMmatrix_inv,hB, c2, Np, QS[:,i],SB, V, bcst2,dt)
                 
                 RT[:,i] = DhmatrixT@QT[:,i]
                 RS[:,i] = DhmatrixS@QS[:,i]
@@ -1367,7 +1367,7 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
             # Apply boundary conditions
             
             Tp = bc_temp(GMmatrix_inv,hT, c1, Np, Tp, V, bcst1,dt)
-            Sp = bc_salt(GMmatrix_inv,hB, c2, Np, Sp,SB2, V, bcst2,dt)
+            Sp = bc_salt(GMmatrix_inv,hB, c2, Np, Sp,SB, V, bcst2,dt)
             
             # update the solution q
             T = Tp 
@@ -1405,10 +1405,10 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
             L = coefF(Tw, gammaS,gammaT, cw, Li, ci, Ti, b, c, pb, a, Sw)
 
             # compute salinity at the boundary
-            SB1, SB2 = SaltB(K,L,M,Sw)
+            SB = SaltB(K,L,M,Sw)
 
             # Compute melt rate
-            V = Meltrate(Sw, SB2, gammaS)
+            V = Meltrate(Sw, SB, gammaS)
             
             Tp = RmatrixT@(18*T - 9*T1 + 2*T0)
             Sp = RmatrixS@(18*S - 9*S1 + 2*S0)
@@ -1416,7 +1416,7 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
             # Apply boundary conditions
                 
             Tp = bc_temp(AT_inv,hT, c1, Np, Tp, V, bcst1,6*dt)
-            Sp = bc_salt(AS_inv,hB, c2, Np, Sp,SB2, V, bcst2,6*dt)
+            Sp = bc_salt(AS_inv,hB, c2, Np, Sp,SB, V, bcst2,6*dt)
 
             # Updates 
             T0 = T1
