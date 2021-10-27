@@ -8,7 +8,7 @@ The main program uses the Module_ice_ocean and Inputs modules. The Module_ice_oc
 
 The unit test solve the following diffusion equationss.
 
-![Optional Text](../main/CompExamPapers/unitTest.png)
+![picture](../main/CompExamPapers/unitTest.png)
 
 
 The ‘ice-ocean’ is a model for ice-ocean interaction where we use temperature and salinity conditions from [gayen_et_al_2016.pdf](../main/CompExamPapers/gayen_et_al_2016.pdf), prescribe Neumann condition based on the three-equations formulation, and compare the results agains the paper ([gayen_et_al_2016.pdf](../main/CompExamPapers/gayen_et_al_2016.pdf)) results obtained with a full 3D Navier-Stokes simulation.
