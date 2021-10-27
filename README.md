@@ -10,7 +10,7 @@ The unit test solve the following the diffusion equations.
 
 
 
-The ‘ice-ocean’ is a model for ice-ocean interaction where we use temperature and salinity conditions from [gayen_et_al_2016.pdf](./Simulation_of_convection_at_a_.pdf), prescribe Neumann condition based on the three-equations formulation, and compare the results agains the paper results obtained with a full 3D Navier-Stokes simulation.
+The ‘ice-ocean’ is a model for ice-ocean interaction where we use temperature and salinity conditions from [gayen_et_al_2016.pdf](https://github.com/yao24/ComprehensiveExam/blob/main/CompExamPapers/gayen_et_al_2016.pdf), prescribe Neumann condition based on the three-equations formulation, and compare the results agains the paper results obtained with a full 3D Navier-Stokes simulation.
 
 To run the program, one needs to download the files in the code folder, then open the Main_program in jupyter notebook. The Main_program can switch from unit test to ice-ocean by changing: test_case = 'unit' or 'ice-ocean. The unit case will show the graph of the exact and numerical solutions and the convergence rates. The ice-ocean will show the temperate and salinity profiles near the ice-ocean interface at different ambient sea-water temperatures and the graph of the melt rate.
 
