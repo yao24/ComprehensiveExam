@@ -482,7 +482,7 @@ def Visualisation(order,Nv,test_case,ti_method,time_method,integration_type,meth
             rcParams.update({'font.size': 12})
 
             figure(1)
-            plot(x_sol,q, '-', label = 'Computed')
+            plot(x_sol,q, '-', label = 'Numerical')
             plot(x_sol,qe, '--', label = 'Exact') 
             xlabel('x')
             ylabel('Solutions')
