@@ -1,0 +1,356 @@
+\begin{thebibliography}{51}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Noble et~al.(2020)Noble, Rohling, Aitken, Bostock, Chase, Gomez, Jong,
+  King, Mackintosh, McCormack, et~al.]{noble2020sensitivity}
+TL~Noble, EJ~Rohling, Alan Robert~Alexander Aitken, Helen~C Bostock, Z~Chase,
+  N~Gomez, Lenneke~M Jong, Matt~A King, Andrew~N Mackintosh, FS~McCormack,
+  et~al.
+\newblock The sensitivity of the antarctic ice sheet to a changing climate:
+  past, present, and future.
+\newblock \emph{Reviews of Geophysics}, 58\penalty0 (4):\penalty0
+  e2019RG000663, 2020.
+
+\bibitem[Straneo and Heimbach(2013)]{straneo2013north}
+Fiammetta Straneo and Patrick Heimbach.
+\newblock North atlantic warming and the retreat of greenland's outlet
+  glaciers.
+\newblock \emph{Nature}, 504\penalty0 (7478):\penalty0 36--43, 2013.
+
+\bibitem[Catania et~al.(2020)Catania, Stearns, Moon, Enderlin, and
+  Jackson]{catania2020future}
+GA~Catania, LA~Stearns, TA~Moon, EM~Enderlin, and RH~Jackson.
+\newblock Future evolution of greenland's marine-terminating outlet glaciers.
+\newblock \emph{Journal of Geophysical Research: Earth Surface}, 125\penalty0
+  (2):\penalty0 e2018JF004873, 2020.
+
+\bibitem[Nick et~al.(2013)Nick, Vieli, Andersen, Joughin, Payne, Edwards,
+  Pattyn, and Van De~Wal]{nick2013future}
+Faezeh~M Nick, Andreas Vieli, Morten~Langer Andersen, Ian Joughin, Antony
+  Payne, Tamsin~L Edwards, Frank Pattyn, and Roderik~SW Van De~Wal.
+\newblock Future sea-level rise from greenland’s main outlet glaciers in a
+  warming climate.
+\newblock \emph{Nature}, 497\penalty0 (7448):\penalty0 235--238, 2013.
+
+\bibitem[Bersch et~al.(2007)Bersch, Yashayaev, and
+  Koltermann]{bersch2007recent}
+Manfred Bersch, Igor Yashayaev, and Klaus~Peter Koltermann.
+\newblock Recent changes of the thermohaline circulation in the subpolar north
+  atlantic.
+\newblock \emph{Ocean Dynamics}, 57\penalty0 (3):\penalty0 223--235, 2007.
+
+\bibitem[Box et~al.(2009)Box, Yang, Bromwich, and Bai]{box2009greenland}
+Jason~E Box, Lei Yang, David~H Bromwich, and Le-Sheng Bai.
+\newblock Greenland ice sheet surface air temperature variability: 1840--2007.
+\newblock \emph{Journal of Climate}, 22\penalty0 (14):\penalty0 4029--4049,
+  2009.
+
+\bibitem[van~den Broeke et~al.(2009)van~den Broeke, Bamber, Ettema, Rignot,
+  Schrama, van~de Berg, van Meijgaard, Velicogna, and
+  Wouters]{van2009partitioning}
+Michiel van~den Broeke, Jonathan Bamber, Janneke Ettema, Eric Rignot, Ernst
+  Schrama, Willem~Jan van~de Berg, Erik van Meijgaard, Isabella Velicogna, and
+  Bert Wouters.
+\newblock Partitioning recent greenland mass loss.
+\newblock \emph{science}, 326\penalty0 (5955):\penalty0 984--986, 2009.
+
+\bibitem[Nick et~al.(2009)Nick, Vieli, Howat, and Joughin]{nick2009large}
+Faezeh~M Nick, Andreas Vieli, Ian~M Howat, and Ian Joughin.
+\newblock Large-scale changes in greenland outlet glacier dynamics triggered at
+  the terminus.
+\newblock \emph{Nature Geoscience}, 2\penalty0 (2):\penalty0 110--114, 2009.
+
+\bibitem[Straneo et~al.(2013)Straneo, Heimbach, Sergienko, Hamilton, Catania,
+  Griffies, Hallberg, Jenkins, Joughin, Motyka, et~al.]{straneo2013challenges}
+F~Straneo, P~Heimbach, O~Sergienko, G~Hamilton, G~Catania, S~Griffies,
+  R~Hallberg, A~Jenkins, I~Joughin, R~Motyka, et~al.
+\newblock Challenges to understanding the dynamic response of greenland's
+  marine terminating glaciers to oceanic and atmospheric forcing, b. am.
+  meteorol. soc., 94, 1131--1144, 2013.
+
+\bibitem[Rignot et~al.(2010)Rignot, Koppes, and Velicogna]{rignot2010rapid}
+Eric Rignot, Michele Koppes, and Isabella Velicogna.
+\newblock Rapid submarine melting of the calving faces of west greenland
+  glaciers.
+\newblock \emph{Nature Geoscience}, 3\penalty0 (3):\penalty0 187--191, 2010.
+
+\bibitem[Straneo and Cenedese(2015)]{straneo2015dynamics}
+Fiamma Straneo and Claudia Cenedese.
+\newblock The dynamics of greenland's glacial fjords and their role in climate.
+\newblock \emph{Annual review of marine science}, 7:\penalty0 89--112, 2015.
+
+\bibitem[Schaffer et~al.(2017)Schaffer, von Appen, Dodd, Hofstede, Mayer,
+  de~Steur, and Kanzow]{schaffer2017warm}
+Janin Schaffer, Wilken-Jon von Appen, Paul~A Dodd, Coen Hofstede, Christoph
+  Mayer, Laura de~Steur, and Torsten Kanzow.
+\newblock Warm water pathways toward n ioghalvfjerdsfjorden g lacier, n
+  ortheast g reenland.
+\newblock \emph{Journal of Geophysical Research: Oceans}, 122\penalty0
+  (5):\penalty0 4004--4020, 2017.
+
+\bibitem[Jenkins(2011)]{jenkins2011convection}
+Adrian Jenkins.
+\newblock Convection-driven melting near the grounding lines of ice shelves and
+  tidewater glaciers.
+\newblock \emph{Journal of Physical Oceanography}, 41\penalty0 (12):\penalty0
+  2279--2294, 2011.
+
+\bibitem[Kerr and McConnochie(2015)]{kerr2015dissolution}
+Ross~C Kerr and Craig~D McConnochie.
+\newblock Dissolution of a vertical solid surface by turbulent compositional
+  convection.
+\newblock \emph{Journal of Fluid Mechanics}, 765:\penalty0 211--228, 2015.
+
+\bibitem[Gayen et~al.(2016)Gayen, Griffiths, and Kerr]{gayen2016simulation}
+Bishakhdatta Gayen, Ross~W Griffiths, and Ross~C Kerr.
+\newblock Simulation of convection at a vertical ice face dissolving into
+  saline water.
+\newblock \emph{Journal of Fluid Mechanics}, 798:\penalty0 284--298, 2016.
+
+\bibitem[Pritchard et~al.()Pritchard, Ligtenberg, Fricker, and
+  Vaughan]{pritchard484mr}
+HD~Pritchard, SRM Ligtenberg, HA~Fricker, and DG~Vaughan.
+\newblock Mr van denbroeke, and l. padman (2012).
+\newblock \emph{Antarctic ice-sheet loss driven by basal melting of ice
+  shelves, Nature}, 484:\penalty0 502--505.
+
+\bibitem[Malyarenko et~al.(2020)Malyarenko, Wells, Langhorne, Robinson,
+  Williams, and Nicholls]{malyarenko2020synthesis}
+Alena Malyarenko, Andrew~J Wells, Patricia~J Langhorne, Natalie~J Robinson,
+  Michael~JM Williams, and Keith~W Nicholls.
+\newblock A synthesis of thermodynamic ablation at ice-ocean interfaces from
+  theory, observations and models.
+\newblock \emph{Ocean Modelling}, page 101692, 2020.
+
+\bibitem[Weertman(1974)]{weertman1974stability}
+Johannes Weertman.
+\newblock Stability of the junction of an ice sheet and an ice shelf.
+\newblock \emph{Journal of Glaciology}, 13\penalty0 (67):\penalty0 3--11, 1974.
+
+\bibitem[DeConto and Pollard(2016)]{deconto2016contribution}
+Robert~M DeConto and David Pollard.
+\newblock Contribution of antarctica to past and future sea-level rise.
+\newblock \emph{Nature}, 531\penalty0 (7596):\penalty0 591--597, 2016.
+
+\bibitem[Gwyther et~al.(2020)Gwyther, Kusahara, Asay-Davis, Dinniman, and
+  Galton-Fenzi]{gwyther2020vertical}
+David~E Gwyther, Kazuya Kusahara, Xylar~S Asay-Davis, Michael~S Dinniman, and
+  Benjamin~K Galton-Fenzi.
+\newblock Vertical processes and resolution impact ice shelf basal melting: A
+  multi-model study.
+\newblock \emph{Ocean Modelling}, 147:\penalty0 101569, 2020.
+
+\bibitem[Jenkins and Doake(1991)]{jenkins1991ice}
+Adrian Jenkins and CSM Doake.
+\newblock Ice-ocean interaction on ronne ice shelf, antarctica.
+\newblock \emph{Journal of Geophysical Research: Oceans}, 96\penalty0
+  (C1):\penalty0 791--813, 1991.
+
+\bibitem[Rignot and Jacobs(2002)]{rignot2002rapid}
+Eric Rignot and Stanley~S Jacobs.
+\newblock Rapid bottom melting widespread near antarctic ice sheet grounding
+  lines.
+\newblock \emph{Science}, 296\penalty0 (5575):\penalty0 2020--2023, 2002.
+
+\bibitem[Motyka et~al.(2003)Motyka, Hunter, Echelmeyer, and
+  Connor]{motyka2003submarine}
+Roman~J Motyka, Lewis Hunter, Keith~A Echelmeyer, and Cathy Connor.
+\newblock Submarine melting at the terminus of a temperate tidewater glacier,
+  leconte glacier, alaska, usa.
+\newblock \emph{Annals of Glaciology}, 36:\penalty0 57--65, 2003.
+
+\bibitem[Jenkins and Holland(2002)]{jenkins2002model}
+Adrian Jenkins and David~M Holland.
+\newblock A model study of ocean circulation beneath filchner-ronne ice shelf,
+  antarctica: Implications for bottom water formation.
+\newblock \emph{Geophysical research letters}, 29\penalty0 (8):\penalty0 34--1,
+  2002.
+
+\bibitem[Hewitt(2020)]{hewitt2020subglacial}
+Ian~J Hewitt.
+\newblock Subglacial plumes.
+\newblock \emph{Annual Review of Fluid Mechanics}, 52:\penalty0 145--169, 2020.
+
+\bibitem[Joughin et~al.(2012)Joughin, Alley, and Holland]{joughin2012ice}
+Ian Joughin, Richard~B Alley, and David~M Holland.
+\newblock Ice-sheet response to oceanic forcing.
+\newblock \emph{science}, 338\penalty0 (6111):\penalty0 1172--1176, 2012.
+
+\bibitem[Wells and Worster(2008)]{wells2008geophysical}
+Andrew~J Wells and M~Grae Worster.
+\newblock A geophysical-scale model of vertical natural convection boundary
+  layers.
+\newblock \emph{Journal of Fluid Mechanics}, 609:\penalty0 111--137, 2008.
+
+\bibitem[Straneo et~al.(2012)Straneo, Sutherland, Holland, Gladish, Hamilton,
+  Johnson, Rignot, Xu, and Koppes]{straneo2012characteristics}
+Fiammetta Straneo, David~A Sutherland, David Holland, Carl Gladish, Gordon~S
+  Hamilton, Helen~L Johnson, Eric Rignot, Yun Xu, and Michele Koppes.
+\newblock Characteristics of ocean waters reaching greenland's glaciers.
+\newblock \emph{Annals of Glaciology}, 53\penalty0 (60):\penalty0 202--210,
+  2012.
+
+\bibitem[Holland and Jenkins(1999)]{holland1999modeling}
+David~M Holland and Adrian Jenkins.
+\newblock Modeling thermodynamic ice--ocean interactions at the base of an ice
+  shelf.
+\newblock \emph{Journal of Physical Oceanography}, 29\penalty0 (8):\penalty0
+  1787--1800, 1999.
+
+\bibitem[Millero(1978)]{millero1978freezing}
+FJ~Millero.
+\newblock Freezing point of sea water.
+\newblock \emph{eighth report of the Joint Panel of Oceanographic Tables and
+  Standards, appendix}, 6:\penalty0 29--31, 1978.
+
+\bibitem[Oerter et~al.(1992)Oerter, Kipfstuhl, Determann, Miller, Wagenbach,
+  Minikin, and Graft]{oerter1992evidence}
+Hans Oerter, J~Kipfstuhl, J{\"u}rgen Determann, Heinrich Miller, D~Wagenbach,
+  A~Minikin, and W~Graft.
+\newblock Evidence for basal marine ice in the filchner--ronne ice shelf.
+\newblock \emph{Nature}, 358\penalty0 (6385):\penalty0 399--401, 1992.
+
+\bibitem[Holland(1998)]{holland1998parameterization}
+David~M Holland.
+\newblock On the parameterization of basal heat flux for sea-ice modeling.
+\newblock \emph{Geophysica}, 34\penalty0 (1-2):\penalty0 1--21, 1998.
+
+\bibitem[Jenkins et~al.(2010)Jenkins, Nicholls, and
+  Corr]{jenkins2010observation}
+Adrian Jenkins, Keith~W Nicholls, and Hugh~FJ Corr.
+\newblock Observation and parameterization of ablation at the base of ronne ice
+  shelf, antarctica.
+\newblock \emph{Journal of Physical Oceanography}, 40\penalty0 (10):\penalty0
+  2298--2312, 2010.
+
+\bibitem[Wells and Worster(2011)]{wells2011melting}
+Andrew~J Wells and M~Grae Worster.
+\newblock Melting and dissolving of a vertical solid surface with laminar
+  compositional convection.
+\newblock \emph{Journal of fluid mechanics}, 687:\penalty0 118--140, 2011.
+
+\bibitem[Grossmann and Lohse(2000)]{grossmann2000scaling}
+Siegfried Grossmann and Detlef Lohse.
+\newblock Scaling in thermal convection: a unifying theory.
+\newblock \emph{Journal of Fluid Mechanics}, 407:\penalty0 27--56, 2000.
+
+\bibitem[McConnochie and Kerr(2017)]{mcconnochie2017using}
+Craig~Daniel McConnochie and Ross~C Kerr.
+\newblock Using laboratory experiments to improve ice-ocean parameterizations.
+\newblock In \emph{AGU Fall Meeting Abstracts}, volume 2017, pages C23A--1210,
+  2017.
+
+\bibitem[Dinniman et~al.(2007)Dinniman, Klinck, and
+  Smith~Jr]{dinniman2007influence}
+Michael~S Dinniman, John~M Klinck, and Walker~O Smith~Jr.
+\newblock Influence of sea ice cover and icebergs on circulation and water mass
+  formation in a numerical circulation model of the ross sea, antarctica.
+\newblock \emph{Journal of Geophysical Research: Oceans}, 112\penalty0 (C11),
+  2007.
+
+\bibitem[Losch(2008)]{losch2008modeling}
+Martin Losch.
+\newblock Modeling ice shelf cavities in az coordinate ocean general
+  circulation model.
+\newblock \emph{Journal of Geophysical Research: Oceans}, 113\penalty0 (C8),
+  2008.
+
+\bibitem[Timmermann et~al.(2012)Timmermann, Wang, and
+  Hellmer]{timmermann2012ice}
+Ralph Timmermann, Qiang Wang, and HH~Hellmer.
+\newblock Ice-shelf basal melting in a global finite-element
+  sea-ice/ice-shelf/ocean model.
+\newblock \emph{Annals of Glaciology}, 53\penalty0 (60):\penalty0 303--314,
+  2012.
+
+\bibitem[Kusahara and Hasumi(2013)]{kusahara2013modeling}
+Kazuya Kusahara and Hiroyasu Hasumi.
+\newblock Modeling antarctic ice shelf responses to future climate changes and
+  impacts on the ocean.
+\newblock \emph{Journal of Geophysical Research: Oceans}, 118\penalty0
+  (5):\penalty0 2454--2475, 2013.
+
+\bibitem[Ringler et~al.(2013)Ringler, Petersen, Higdon, Jacobsen, Jones, and
+  Maltrud]{ringler2013multi}
+Todd Ringler, Mark Petersen, Robert~L Higdon, Doug Jacobsen, Philip~W Jones,
+  and Mathew Maltrud.
+\newblock A multi-resolution approach to global ocean modeling.
+\newblock \emph{Ocean Modelling}, 69:\penalty0 211--232, 2013.
+
+\bibitem[Zhou and Hattermann(2020)]{zhou2020modeling}
+Qin Zhou and Tore Hattermann.
+\newblock Modeling ice shelf cavities in the unstructured-grid, finite volume
+  community ocean model: Implementation and effects of resolving small-scale
+  topography.
+\newblock \emph{Ocean Modelling}, 146:\penalty0 101536, 2020.
+
+\bibitem[Hoffman and Koch()]{MPAS}
+Matthew Hoffman and Dorothy Koch.
+\newblock The model for prediction across scales framework: A flexible
+  foundation for next-generation earth system model components.
+\newblock
+  \url{https://e3sm.org/wp-content/uploads/2018/03/ResearchHighlight_ModelPrediction_V5.pdf}.
+\newblock Accessed: 2021-10-24.
+
+\bibitem[Iskandarani et~al.(2002)Iskandarani, Haidvogel, Levin, Curchitser, and
+  Edwards]{iskandarani2002multi}
+Mohamed Iskandarani, Dale~B Haidvogel, Julia~C Levin, Enrique Curchitser, and
+  Christopher~A Edwards.
+\newblock Multi-scale geophysical modeling using the spectral element method.
+\newblock \emph{Computing in Science \& Engineering}, 4\penalty0 (5):\penalty0
+  42--48, 2002.
+
+\bibitem[Il{\i}cak et~al.(2009)Il{\i}cak, {\"O}zg{\"o}kmen, {\"O}zsoy, and
+  Fischer]{ilicak2009non}
+Mehmet Il{\i}cak, Tamay~M {\"O}zg{\"o}kmen, Emin {\"O}zsoy, and Paul~F Fischer.
+\newblock Non-hydrostatic modeling of exchange flows across complex geometries.
+\newblock \emph{Ocean Modelling}, 29\penalty0 (3):\penalty0 159--175, 2009.
+
+\bibitem[Chang et~al.(2005)Chang, Xu, {\"O}zg{\"o}kmen, Chassignet, Peters, and
+  Fischer]{chang2005comparison}
+Yeon~S Chang, Xiaobiao Xu, Tamay~M {\"O}zg{\"o}kmen, Eric~P Chassignet, Hartmut
+  Peters, and Paul~F Fischer.
+\newblock Comparison of gravity current mixing parameterizations and
+  calibration using a high-resolution 3d nonhydrostatic spectral element model.
+\newblock \emph{Ocean Modelling}, 10\penalty0 (3-4):\penalty0 342--368, 2005.
+
+\bibitem[Karniadakis(1989)]{karniadakis1989spectral}
+George~Em Karniadakis.
+\newblock Spectral element simulations of laminar and turbulent flows in
+  complex geometries.
+\newblock \emph{Applied numerical mathematics}, 6\penalty0 (1-2):\penalty0
+  85--105, 1989.
+
+\bibitem[Mathiot et~al.(2017)Mathiot, Jenkins, Harris, and
+  Madec]{mathiot2017explicit}
+Pierre Mathiot, Adrian Jenkins, Christopher Harris, and Gurvan Madec.
+\newblock Explicit representation and parametrised impacts of under ice shelf
+  seas in the z∗ coordinate ocean model nemo 3.6.
+\newblock \emph{Geoscientific Model Development}, 10\penalty0 (7):\penalty0
+  2849--2874, 2017.
+
+\bibitem[Jenkins(2016)]{jenkins2016simple}
+Adrian Jenkins.
+\newblock A simple model of the ice shelf--ocean boundary layer and current.
+\newblock \emph{Journal of Physical Oceanography}, 46\penalty0 (6):\penalty0
+  1785--1803, 2016.
+
+\bibitem[Kimura et~al.(2015)Kimura, Nicholls, and
+  Venables]{kimura2015estimation}
+Satoshi Kimura, Keith~W Nicholls, and Emily Venables.
+\newblock Estimation of ice shelf melt rate in the presence of a thermohaline
+  staircase.
+\newblock \emph{Journal of Physical Oceanography}, 45\penalty0 (1):\penalty0
+  133--148, 2015.
+
+\bibitem[Davis and Nicholls(2019)]{davis2019turbulence}
+Peter~ED Davis and Keith~W Nicholls.
+\newblock Turbulence observations beneath larsen c ice shelf, antarctica.
+\newblock \emph{Journal of Geophysical Research: Oceans}, 124\penalty0
+  (8):\penalty0 5529--5550, 2019.
+
+\end{thebibliography}

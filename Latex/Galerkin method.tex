@@ -1,0 +1,137 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[scale = 0.8]{geometry}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage{hyperref}
+\usepackage[round]{natbib}
+\bibliographystyle{unsrtnat}
+\usepackage{float}
+\usepackage{subfig}
+\usepackage{comment}
+\setlength{\parindent}{0pt}
+\title{Element-Based Galerkin method}
+\author{Yao Gahounzo}
+
+% insert month and year of your thesis, only:
+%\date{October 4, 2021}
+\date{\today} 
+
+\begin{document}
+
+    \maketitle
+    
+    Galerkin methods are numerical methods used to solve PDEs. This short note on Galerkin methods presents the Continous Galerkin (CG), where a free flux is assumed across the boundary. We described the CG method using the following diffusion equation
+	
+	\begin{equation}
+	\label{eq:diff}
+	    \dfrac{\partial q(x,t)}{\partial t} = \nu\nabla^2 q(x,t),
+	\end{equation}
+	
+	\noindent with either Neumann or Robin boundary conditions. Let's divide the problem domain $\Omega\in\mathbb{R}$ into $N_e$ elements
+	
+	$$\Omega = \bigcup_{i=1}^{Ne}\Omega_e,$$
+	
+	We create an approximation $q_N^{(e)}(x,t)$ to $q(x,t)$ within each element $\Omega_e$ using 
+	
+	\begin{equation}
+	\label{eq:17}
+	    q_N^{(e)}(x,t) = \sum_{j=1}^{M_N} \psi_jq_j^{(e)}(t),
+	\end{equation}
+	
+	where $M_N$ is the number of nodes in the element, $\psi_j$ is a basis function (e.g. Lagrange polynomials), $q_j^{(e)}$ is the expansion coefficient and the superscript $^{(e)}$ denotes the element index.
+	
+	\begin{figure}[H]
+	    \centering 
+	    \includegraphics[width=12cm]{CGpoly}
+	    \caption*{Continuous Galerkin elements for polynomial order $N = 1$ and $N = 2$.}
+    \end{figure} 
+	
+	We expand both sides of equation $(\ref{eq:diff})$ using the approximation $(\ref{eq:17})$, multiplying with the test function $\psi_i$ and integrate within each element 
+	
+	\begin{equation}
+	    \int_{\Omega_e}\psi_i\dfrac{\partial q_N^{(e)}}{\partial t}d{\Omega_e} = \nu\int_{\Omega_e}\psi_i\nabla^2 q_N^{(e)}d{\Omega_e}
+	\end{equation}
+	
+	Let us use now the product rule
+	
+	$$\nabla\cdot(\psi_i\nabla q_N) = \nabla\psi_i\cdot\nabla q_N + \psi_i\nabla^2 q_N$$
+	
+	After integrating and using divergence theorem we obtain
+	
+	\begin{equation}
+	    \int_{\Omega_e}\psi_id{\Omega_e}\dfrac{d q_N^{(e)}}{dt} = \nu\int_{\Gamma_e}\psi_i\mathbf{n} \cdot\nabla q_N^{(e)}d{\Gamma_e} - \nu\int_{\Omega_e}\nabla\psi_i\cdot\nabla q_N^{(e)} d{\Omega_e}.
+	    \label{eq:20}
+	\end{equation}
+	 $\Gamma_e$ represent the boundary of the element $\Omega_e$. Using the expansion $(\ref{eq:17})$, we get
+	 
+	 \begin{equation}
+	    \sum_{j=1}^{M_N}\int_{\Omega_e}\psi_i\psi_jd{\Omega_e}\dfrac{d q_j^{(e)}}{dt} = \nu\int_{\Gamma_e}\psi_i\mathbf{n} \cdot\nabla q_N^{(e)}d{\Gamma_e} - \nu\sum_{j=1}^{M_N}\int_{\Omega_e}\nabla\psi_i\cdot\nabla \psi_j d{\Omega_e}q_j^{(e)}.
+	    \label{eq:21}
+	\end{equation}
+	
+	
+	The first term on the right-hand side is used to apply the boundary conditions. Due to the continuity across element interfaces, the inter-element edges vanish when the direct stiffness summation is applied to the first term on the right-hand side.
+	
+	\section{Neumann boundary conditions}
+	    
+	    The Neumann boundary condition is generally described as follows
+		\begin{equation}
+			\label{eq:neu}
+				\mathbf{n}\cdot\nabla q(x,t)  = h(x), \quad x\in \partial \Omega.
+		\end{equation}
+		
+		\noindent Applying the Neumann condition $(\ref{eq:neu})$, equation $(\ref{eq:21})$ becomes 
+	    
+	    \begin{equation}
+	    \sum_{j=1}^{M_N}\int_{\Omega_e}\psi_i\psi_jd{\Omega_e}\dfrac{d q_j^{(e)}}{dt} = \nu\int_{\Gamma_e}\psi_ih(x)d{\Gamma_e} - \nu\sum_{j=1}^{M_N}\int_{\Omega_e}\nabla\psi_i\cdot\nabla \psi_j d{\Omega_e}q_j^{(e)}.
+	    %\label{eq:21}
+	\end{equation}
+	    
+	    \noindent In the matrix form, we get 
+	    \begin{equation}
+		    M^{(e)}\dfrac{dq^{(e)}}{dt} = \nu B^{(e)} - \nu L^{(e)}q^{(e)}.
+		\end{equation}
+	
+	where
+	
+	$$M^{(e)} = \sum_{j=1}^{M_N}\int_{\Omega_e}\psi_i\psi_jd{\Omega_e},$$
+	
+	$$L^{(e)} = \sum_{j=1}^{M_N}\int_{\Omega_e}\nabla\psi_i\cdot\nabla \psi_j d{\Omega_e},$$
+	
+	$$B^{(e)} = \int_{\Gamma_e}\psi_ih(x)d{\Gamma_e},$$
+	
+	$q^{(e)}$ is a vector that contains the $q_j^{e}$, and $i,j = 1,2,\ldots,M_N$.
+	\section{Robin boundary condition}
+	    
+	    The general description of Robin boundary condition is given in below equation
+	    
+		\begin{equation*}
+			\label{eq:4}
+			\mathbf{n}\cdot\nabla q(x,t) + k q(x,t)  = g(x), \quad x\in \partial \Omega. 
+		\end{equation*}
+		
+		\noindent Applying the above condition, equation $(\ref{eq:21})$ becomes
+		
+		\begin{align*}
+		    \sum_{j=1}^{M_N}\int_{\Omega_e}\psi_i\psi_jd{\Omega_e}\dfrac{d q_j^{(e)}}{dt}& = \nu\int_{\Gamma_e}\psi_ig(x) - k\psi_iq(x,t)d\Gamma_e- \nu\sum_{j=1}^{M_N}\int_{\Omega_e}\nabla\psi_i\nabla\psi_jd{\Omega_e}q_j^{(e)}\\[0.3cm]
+		    \sum_{j=1}^{M_N}\int_{\Omega_e}\psi_i\psi_jd{\Omega_e}\dfrac{d q_j^{(e)}}{dt}& = \nu\int_{\Gamma_e}\psi_i g(x)d\Gamma_e - k\nu\sum_{j=1}^{M_N}\int_{\Gamma_e}\psi_i\psi_jd\Gamma_eq_j^{(e)} - \nu\sum_{j=1}^{M_N}\int_{\Omega_e}\nabla\psi_i\nabla\psi_jd{\Omega_e}q_j^{(e)}\\
+		\end{align*}
+		
+		In the matrix form, we get 
+		\begin{equation}
+		    M^{(e)}\dfrac{dq^{(e)}}{dt} = \nu B^{(e)} - \nu\left(kF^{(e)} + L^{(e)}\right)q^{(e)},
+		\end{equation}
+		
+	where the new term $F^{(e)}$ is 
+	
+	$$F^{(e)} = \sum_{j=1}^{M_N}\int_{\Gamma_e}\psi_i\psi_jd\Gamma_e.$$
+	 The direct stiffness summation is applied to move from the element reference equation to the global equation. For more detail the reader is referred to \cite{giraldo2020introduction}.
+	 
+	 \bibliography{refComp}
+    
+\end{document}

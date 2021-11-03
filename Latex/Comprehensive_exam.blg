@@ -1,0 +1,59 @@
+This is BibTeX, Version 0.99d (TeX Live 2020)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: Comprehensive_exam.aux
+The style file: unsrtnat.bst
+Database file #1: refComp.bib
+I was expecting a `,' or a `}'---line 257 of file refComp.bib
+ :   
+ :   year={2012},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Repeated entry---line 449 of file refComp.bib
+ : @article{straneo2012characteristics
+ :                                    ,
+I'm skipping whatever remains of this entry
+Warning--empty year in pritchard484mr
+Warning--empty year in pritchard484mr
+Warning--empty year in MPAS
+You've used 51 entries,
+            2481 wiz_defined-function locations,
+            868 strings with 14353 characters,
+and the built_in function-call counts, 21684 in all, are:
+= -- 1807
+> -- 1235
+< -- 27
++ -- 468
+- -- 366
+* -- 1852
+:= -- 3473
+add.period$ -- 153
+call.type$ -- 51
+change.case$ -- 102
+chr.to.int$ -- 51
+cite$ -- 54
+duplicate$ -- 984
+empty$ -- 1918
+format.name$ -- 449
+if$ -- 4514
+int.to.chr$ -- 1
+int.to.str$ -- 52
+missing$ -- 49
+newline$ -- 263
+num.names$ -- 153
+pop$ -- 381
+preamble$ -- 1
+purify$ -- 51
+quote$ -- 0
+skip$ -- 583
+stack$ -- 0
+substring$ -- 1296
+swap$ -- 128
+text.length$ -- 3
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 357
+warning$ -- 3
+while$ -- 192
+width$ -- 0
+write$ -- 667
+(There were 2 error messages)
