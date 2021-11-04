@@ -1,4 +1,4 @@
-\begin{thebibliography}{51}
+\begin{thebibliography}{50}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -317,13 +317,6 @@ Yeon~S Chang, Xiaobiao Xu, Tamay~M {\"O}zg{\"o}kmen, Eric~P Chassignet, Hartmut
 \newblock Comparison of gravity current mixing parameterizations and
   calibration using a high-resolution 3d nonhydrostatic spectral element model.
 \newblock \emph{Ocean Modelling}, 10\penalty0 (3-4):\penalty0 342--368, 2005.
-
-\bibitem[Karniadakis(1989)]{karniadakis1989spectral}
-George~Em Karniadakis.
-\newblock Spectral element simulations of laminar and turbulent flows in
-  complex geometries.
-\newblock \emph{Applied numerical mathematics}, 6\penalty0 (1-2):\penalty0
-  85--105, 1989.
 
 \bibitem[Mathiot et~al.(2017)Mathiot, Jenkins, Harris, and
   Madec]{mathiot2017explicit}
