@@ -526,7 +526,7 @@ def bc_robin(M, Np,RHS, c, ax, bx, time, icase, exactSol,g,dt):
     '''
     
     b = c*g(bx, time, icase)
-    B1 = c*b*M[:,-1]
+    B1 = b*M[:,-1]
     RHS = RHS + dt*B1
     RHS[0] =  exactSol(ax, time, icase)
     

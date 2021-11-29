@@ -79,7 +79,7 @@ def exactSol(x, t, icase):
         X = zeros(M)
         for n in range(1,M+1):
 
-            z = AllZeros(func,(2*n-1)*pi/6,n*pi/3,100)
+            z = AllZeros(func,(2*n-1)*pi/6,n*pi/3,15)
             X[n-1] = z[0]
 
         cn = 200*(3*X-sin(3*X))/(3*X*(3*X-sin(3*X)*cos(3*X)))
@@ -452,7 +452,7 @@ def Visualisation(order,Nv,test_case,ti_method,time_method,integration_type,meth
 
                 # Plot the temperature behavior
                 figure(1)
-                rcParams.update({'font.size': 12})
+                rcParams.update({'font.size': 13})
                 p1, = plot(x_sol[:indx], T[:indx], '-', label = 'Tw = {}'.format(Tw))
                 p2, = plot(x_sol[:indx], Tgayen[:indx], ':')
                 ylim([-0.5,5.5])
@@ -460,7 +460,7 @@ def Visualisation(order,Nv,test_case,ti_method,time_method,integration_type,meth
                 ylabel('Temperature (˚C)')
                 title('Temperature profile')
                 grid(linestyle = '--', linewidth = 0.5)
-                leg1 = legend(title = 'Far-field temperature',loc = 1)
+                leg1 = legend(title = 'Seawater temperature',loc = 1)
                 gca().add_artist(leg1)
                 leg2 = legend([p2],['Gayen et al. 2016'],loc = 4)
                 gca().add_artist(leg1)
@@ -472,7 +472,7 @@ def Visualisation(order,Nv,test_case,ti_method,time_method,integration_type,meth
                 ylabel('Salinity (psu)')
                 title('Salinity profile')
                 grid(linestyle = '--', linewidth = 0.5)
-                legend(title = 'Far-field temperature')
+                legend(title = 'Seawater temperature')
 
 
         # Plot convergence if unit test case
@@ -490,7 +490,10 @@ def Visualisation(order,Nv,test_case,ti_method,time_method,integration_type,meth
             grid(axis='both',linestyle='--')
             legend()
             show()   
-
+            
+            #print('qmax = ',q.min())
+            #print('qmax = ',q.max())
+            
             figure(2)
             clf()
 
@@ -527,7 +530,7 @@ def Visual_interface(SW, TW):
         SW: Array that contains different values of the ambient salinity of the sea-water.
         TW: Array that contains different values of the ambient temperature of the sea-water.
     '''
-    
+    rcParams.update({'font.size': 12})
     figure(3)
 
     V = zeros(len(SW))
@@ -545,15 +548,18 @@ def Visual_interface(SW, TW):
             # Compute melt rate
             V[i] = Meltrate(Sw, SB, gammaS)
     
-        V = 1e6*V
+        #V = 1e6*V
+        V = 86400*V
 
         plot(SW,V,'-o',label = 'Tw = {}'.format(Tw))
         legend()
         xlabel('Salinity (psu)')
-        ylabel('Melting rate V ($\mu ms^{-1}$)')
+        #ylabel('Melting rate V ($\mu ms^{-1}$)')
+        ylabel('Melt rate V ($m/day$)')
+        title('Melt rate at fixed seawater temperature')
         grid(linestyle = '--', linewidth = 0.5)
 
-        
+    rcParams.update({'font.size': 12})
     figure(4)
     
     Sw = 35
@@ -577,7 +583,8 @@ def Visual_interface(SW, TW):
         TB[i] = a*SB + b + c*pb
         
     plot(TW,TB,'-o')
-    xlabel('$T_w-T_L$')
-    ylabel('Interface temperature $T_i$(˚C)')
+    xlabel('$T_w-T_L (˚C)$')
+    ylabel('Interface temperature $T_i$ (˚C)')
+    title('Interface temperature vs seawater temperature')
     grid(linestyle = '--', linewidth = 0.5)   
     
