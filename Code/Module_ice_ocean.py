@@ -895,7 +895,7 @@ def diff_Solver(N,Q,nel, Np, ax, bx, integration_type, g, exactSol,c, u, CFL, Tf
                 R_sum = R_sum + alpha[i,j]*R[:,j]
                 aa += alpha[i,j]
 
-            RR = GMmatrix@Q[:,0] + dt*R_sum
+            RR = GMmatrix@Qt[:,0] + dt*R_sum
 
             Qt[:,i] = Amatrix_inv@RR
             
@@ -1254,8 +1254,8 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
                 RRT = GMmatrixT@QT[:,0] + dt*RT_sum
                 RRS = GMmatrixS@QS[:,0] + dt*RS_sum
 
-                QT[:,i] = Amatrix_inv@RRT
-                QS[:,i] = Amatrix_inv@RRS
+                QT[:,i] = AmatrixT_inv@RRT
+                QS[:,i] = AmatrixS_inv@RRS
                 
                 # Apply boundary conditions at the intermediate time step
                 
@@ -1321,7 +1321,7 @@ def ice_ocean_Solver(N,Q,nel, Np, ax, bx, integration_type, hT, hB, \
 
             # compute salinity at the boundary
             SB = SaltB(K,L,M,Sw)
-            
+            print(SB)
             # Compute melt rate
             V = Meltrate(Sw, SB, gammaS)
 
